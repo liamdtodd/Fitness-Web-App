@@ -60,13 +60,10 @@ app.get('/', function(req, res) {
                         }
 
                         const data = {
-                            member: memberResults,
-                            fitness: fitnessResults,
-                            exercise: exerciseResults,
-                            nutrients: nutrientResults,
-                            fitnesstoExercise: fitexerResults
+                            member: memberResults
                         };
 
+                        console.log('member: ', data)
                         res.render('index', data);
                     });
                 });
