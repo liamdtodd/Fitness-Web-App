@@ -1,146 +1,93 @@
-<!-- index.hbs -->
-<h1>The server is running!</h1>
-<p>If you see this text, the server is <strong>definitely</strong> working!</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CRUD Example</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <h1>Member Table</h1>
 
-{{!-- Create a table --}}
-<table id="member-table">
-
-    {{!-- Header section --}}
-    <thead>
-
-        {{
-!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --
-        }}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
+    <table id="member-table">
+        <thead>
+            <tr>
+                {{#each members.[0]}}
+                <th>{{@key}}</th>
+                {{/each}}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each members}}
+            <tr>
+                <td>{{this.MemberID}}</td>
+                <td>{{this.Name}}</td>
+                <td>{{this.Email}}</td>
+                <td>{{this.Height}}</td>
+                <td>{{this.Weight}}</td>
+                <td>{{this.Age}}</td>
+                <td>
+                    <button onclick="updateMember('{{this.MemberID}}')">Update</button>
+                    <button onclick="deleteMember('{{this.MemberID}}')">Delete</button>
+                </td>
+            </tr>
             {{/each}}
-        </tr>
-    </thead>
+        </tbody>
+    </table>
 
-    {{!-- Body section --}}
-    <tbody>
+    <h2>Add Member</h2>
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
-        {{#each data}}
-        <tr>
-            <td>{{this.MemberID}}</td>
-            <td>{{this.Name}}</td>
-            <td>{{this.Email}}</td>
-            <td>{{this.Height}}</td>
-            <td>{{this.Weight}}</td>
-            <td>{{this.Age}}</td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+    <form action="/add-member" method="POST">
+        <label for="inputName">Name:</label>
+        <input type="text" id="inputName" name="inputName" required>
 
+        <label for="inputEmail">Email:</label>
+        <input type="email" id="inputEmail" name="inputEmail" required>
 
-{{!-- Form to add a record to the table  --}}
-<h2>Adding Data with AJAX</h2>
-<p>To add a new person, please enter their information below and click 'Submit'!</p>
-<form id="add-member-form-ajax">
-    <label for="input-MemberID">First Name: </label>
-    <input type="number" name="input-MemberID" id="input-memberID">
+        <label for="inputHeight">Height:</label>
+        <input type="number" id="inputHeight" name="inputHeight" required>
 
-    <label for="input-Name">Name: </label>
-    <input type="text" name="input-Name" id="input-Name">
+        <label for="inputWeight">Weight:</label>
+        <input type="number" id="inputWeight" name="inputWeight" required>
 
-    <label for="input-Email">Email: </label>
-    <input type="text" name="input-Email" id="input-Email">
+        <label for="inputAge">Age:</label>
+        <input type="number" id="inputAge" name="inputAge" required>
 
-    <label for="input-Height">Height: </label>
-    <input type="number" name="input-Height" id="input-Height">
+        <input type="submit" value="Add Member">
+    </form>
 
-    <label for="input-Weight">Weight: </label>
-    <input type="number" name="input-Weight" id="input-Weight">
-
-    <label for="input-Age">Age: </label>
-    <input type="number" name="input-Age" id="input-Age">
-
-    <input type="submit">
-</form>
-
-{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="./js/add_member.js"></script>
-
-
-
-<table id="member-table">
-    >
-    {{!-- Header section --}}
-    <thead>
-
-        {{
-!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --
-        }}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
+    <!-- Update Member Form -->
+    <h2>Update Member</h2>
+    <form id="update-member-form-ajax">
+        <label for="updateSelect">Select Member:</label>
+        <select name="updateSelect" id="updateSelect">
+            <option value="">Select a Member</option>
+            {{#each members}}
+            <option value="{{this.MemberID}}">{{this.Name}}</option>
             {{/each}}
-            <th>delete</th>
-        </tr>
-    </thead>
+        </select>
 
-    {{!-- Body section --}}
-    <tbody>
+        <label for="updateEmail">New Email:</label>
+        <input type="text" id="updateEmail" name="updateEmail" required>
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
-        {{#each data}}
-        <tr data-value={{this.id}}>
-            >
-            <td>{{this.MemberID}}</td>
-            <td>{{this.Name}}</td>
-            <td>{{this.Email}}</td>
-            <td>{{this.Height}}</td>
-            <td>{{this.Weight}}</td>
-            <td>{{this.Age}}</td>
-            <td><button onclick="deleteMember({{this.MemberID}})">Delete</button></td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-<script src="./js/delete_member.js"></script>
+        <input type="submit" value="Update">
+    </form>
 
+    <!-- Delete Member Form -->
+    <h2>Delete Member</h2>
+    <form id="delete-member-form-ajax">
+        <label for="deleteSelect">Select Member:</label>
+        <select name="deleteSelect" id="deleteSelect">
+            <option value="">Select a Member</option>
+            {{#each members}}
+            <option value="{{this.MemberID}}">{{this.Name}}</option>
+            {{/each}}
+        </select>
 
+        <input type="submit" value="Delete">
+    </form>
 
-<h2>Search Using an HTML Form</h2>
-<p>Search by last name using the field below. Partial last names are OK too!</p>
-<form id="search-member-html" method='GET' action='/'>
-    <label for="input-Name">Search by Name: </label>
-    <input type="text" name="Name" id="input-Name-html-search">
-
-    <input type="submit">
-    <a href='/'><button>Reset</button></a>
-</form>
-
-<h2>Updating A User's Email Form</h2>
-<p>To update a specific user's email select their name from the drop-down menu on the left and their desired email from the drop down menu on the right</p>
-<form id="update-member-form-ajax">
-
-    <label for="input-Name">Name: </label>
-    <select name="input-Name" id="mySelect">
-        <option value="test">Select a Member</option>
-        {{#each data}}
-        <option value="{{this.MemberID}}">{{this.Name}}</option>
-        {{/each}}
-    </select>
-
-    <label for="input-Email">Email: </label>
-    <select name="input-Email" id="input-Email-update">
-        <option>Select an Email</option>
-        {{#each data}}
-        <option value="{{this.MemberID}}">{{this.Name}}</option>
-        {{/each}}
-    </select>
-    <input type="submit">
-
-</form>
-
-<script src="./js/update_member.js"></script>
+    <script src="/update_member.js"></script>
+    <script src="/delete_member.js"></script>
+    <!-- Include other JS scripts if needed -->
+</body>
+</html>
