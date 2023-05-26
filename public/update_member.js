@@ -8,12 +8,12 @@ updatePersonForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputName = document.getElementById("mySelect");
-    let inputEmail = document.getElementById("input-Email-update");
+    let inputMemberID = document.getElementById("mySelect");
+    let inputName = document.getElementById("input-Name-update");
 
     // Get the values from the form fields
+    let MemberIDValue = MemberID.value;
     let NameValue = Name.value;
-    let EmailValue = Email.value;
     
     // currently the database table for bsg_people does not allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
@@ -22,8 +22,8 @@ updatePersonForm.addEventListener("submit", function (e) {
 
     // Put our data we want to send in a javascript object
     let data = {
+        MemberID: MemberIDValue,
         Name: NameValue,
-        Email: EmailValue,
     }
     
     // Setup our AJAX request
@@ -50,7 +50,7 @@ updatePersonForm.addEventListener("submit", function (e) {
 })
 
 
-function updateRow(data, memberID){
+function updateRow(data, MemberID){
     let parsedData = JSON.parse(data);
     
     let table = document.getElementById("member-table");
@@ -58,7 +58,7 @@ function updateRow(data, memberID){
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
        //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == memberID) {
+       if (table.rows[i].getAttribute("data-value") == MemberID) {
 
             // Get the location of the row where we found the matching member ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
