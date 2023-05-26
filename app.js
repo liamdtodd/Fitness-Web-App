@@ -76,7 +76,7 @@ app.get('/', function(req, res) {
                             fitnesstoExercise: fitexerResults
                         };
 
-                        res.render('main', data);
+                        res.render('index', data);
                     });
                 });
             });
