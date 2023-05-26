@@ -20,15 +20,6 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'toddl',
-    password: 'RockSaltAndNails5',
-    database: 'cs340_toddl',
-    connectionLimit: 10
-})
-
 var db = require('./database/db-connector')
 
 
