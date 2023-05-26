@@ -89,7 +89,7 @@ app.get('/', function(req, res) {
 app.post('/add-member', function(req, res) {
     const {inputName, inputEmail, inputHeight, inputWeight, inputAge} = req.body
 
-    pool.query('INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES (?, ?, ?, ?, ?)',
+    db.pool.query('INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES (?, ?, ?, ?, ?)',
         [inputName, inputEmail, parseInt(inputHeight), parseInt(inputWeight), parseInt(inputAge)], function(error) {
             if (error) {
                 console.log('Error inserting to database: ', error);
