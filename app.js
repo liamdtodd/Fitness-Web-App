@@ -5,10 +5,8 @@
  */
 
 var express = require('express');
-const exphbs = require('express-handlebars');
+var exphbs = require('express-handlebars');
 var mysql = require('mysql2');
-PORT = 5741;
-
 PORT = 5741;
 
 var app = express();
@@ -21,7 +19,8 @@ const pool = mysql.createPool({
     connectionLimit: 10
 })
 
-app.engine('hbs', exphbs({extname: '.hbs'}));
+const { engine } = require('express-handlebars');
+app.engine('hbs', engine({extname: '.hbs'}));
 app.set('view engine', 'hbs');
 
 app.use(express.static('public'));
