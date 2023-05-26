@@ -7,6 +7,7 @@
 var express = require('express');
 const exphbs = require('express-handlebars');
 var mysql = require('mysql2');
+PORT = 5741;
 
 PORT = 5741;
 
