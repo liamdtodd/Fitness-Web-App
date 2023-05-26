@@ -5,20 +5,25 @@
  */
 
 var express = require('express');
+var exphbs = require('express-handlebars');
+var mysql = require('mysql2');
+
 var app = express();
+app.engine('hbs', exphbs({extname: '.hbs'}));
+app.set('view engine', 'hbs');
+
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'));
 
-PORT = 5741;
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'toddl',
+    password: 'RockSaltAndNails5',
+    database: 'cs340_toddl',
+    connectionLimit: 10
+})
 
-var db = require('./database/db-connector');
-
-
-const { query } = require('express');
-var exphs = require('express-handlebars');
-app.engine('.hbs', exphbs({extname: ".hbs"}));
-app.set('view engine', '.hbs');
 
 
 /* 
@@ -26,157 +31,153 @@ app.set('view engine', '.hbs');
  */
 
 // GET ROUTES
-app.get('/', function(req, res)
-{
-    // Declare Query 1
-    let query1;
+app.get('/', function(req, res) {
+    pool.query('SELECT * FROM Member', function(error, memberResults) {
+        if (error) {
+            console.log('Error getting data from database: ', error);
+            return res.status(500);
+        }
 
-    // If there is no query string, we just perform a basic SELECT
-    if (req.query.Name === undefined)
-    {
-        query1 = "SELECT * FROM Member;";
-    }
+        pool.query('SELECT * FROM Fitness', function(error, fitnessResults) {
+            if (error) {
+                console.log('Error getting data from database: ', error);
+                return res.status(500);
+            }
 
-    // If there is a query string, we assume this is a search, and return desired results
-    else
-    {
-        query1 = `SELECT * FROM Member WHERE Name LIKE "${req.query.Name}%"`
-    }
+            pool.query('SELECT * FROM Exercise', function(error, exerciseResults) {
+                if (error) {
+                    console.log('Error getting data from database: ', error);
+                    return res.status(500);
+                }
 
+                pool.query('SELECT * FROM Nutrients', function(error, nutrientResults) {
+                    if (error) {
+                        console.log('Error getting data from database: ', error);
+                        return res.status(500);
+                    }
+
+                    pool.query('SELECT * FROM FitnesstoExercise', function(error, fitexerResults) {
+                        if (error) {
+                            console.log('Error getting data from database: ', error);
+                            return res.status(500);
+                        }
+
+                        const data = {
+                            member: memberResults,
+                            fitness: fitnessResults,
+                            exercise: exerciseResults,
+                            nutrients: nutrientResults,
+                            fitnesstoExercise: fitexerResults
+                        };
+
+                        res.render('main', data);
+                    });
+                });
+            });
+        });
+    });
 });
 
 // POST ROUTES
-app.post('/add-member-form-ajax', function(req, res) 
-{
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES ('${data.Name}', '${data.Email}', '${data.Height}', '${data.Weight}', '${data.Age}');`;
-    db.pool.query(query1, function(error, rows, fields){
+app.post('/add-member', function(req, res) {
+    const {inputName, inputEmail, inputHeight, inputWeight, inputAge} = req.body
 
-        // Check to see if there was an error
-        if (error) {
+    pool.query('INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES (?, ?, ?, ?, ?',
+        [inputName, inputEmail, parseInt(inputHeight), parseInt(inputWeight), parseInt(inputAge)], function(error) {
+            if (error) {
+                console.log('Error inserting to database: ', error);
+                return res.status(500);
+            }
 
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        }
-        else
-        {
-            // If there was no error, perform a SELECT * on bsg_people
-            query2 = `SELECT * FROM Member;`;
-            db.pool.query(query2, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.sendStatus(400);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    res.send(rows);
-                }
-            })
-        }
-    })
+            res.redirect('/');
+        });
 });
 
-/*
-app.post('/add-person-form', function(req, res){
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data['input-fname']}', '${data['input-lname']}', ${homeworld}, ${age})`;
-    db.pool.query(query1, function(error, rows, fields){
-
-        // Check to see if there was an error
+app.post('/add-fitness', (req, res) => {
+    const { memberID, date, weight, caloriesBurned } = req.body;
+  
+    pool.query(
+      'INSERT INTO Fitness (MemberID, Date, Weight, CaloriesBurned) VALUES (?, ?, ?, ?)',
+      [parseInt(memberID), date, parseInt(weight), parseInt(caloriesBurned)],
+      function(error) {
         if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
+          console.error('Error inserting fitness data into the database:', error);
+          return res.status(500).send('Internal Server Error');
         }
+  
+        res.redirect('/');
+      });
+});
 
-        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
-        // presents it on the screen
-        else
-        {
+app.post('/add-exercise', (req, res) => {
+    const { exerciseName } = req.body;
+  
+    pool.query('INSERT INTO Exercise (Name) VALUES (?)', [exerciseName], function(error) {
+      if (error) {
+        console.error('Error inserting exercise data into the database:', error);
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      res.redirect('/');
+    });
+});
+
+app.post('/add-nutrient', (req, res) => {
+    const { nutrientName } = req.body;
+  
+    pool.query('INSERT INTO Nutrients (Name) VALUES (?)', [nutrientName], function(error) {
+      if (error) {
+        console.error('Error inserting nutrient data into the database:', error);
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      res.redirect('/');
+    });
+});
+
+app.post('/add-fitnesstoexercise', (req, res) => {
+    const { fitnessID, exerciseID, duration } = req.body;
+  
+    pool.query(
+      'INSERT INTO FitnesstoExercise (FitnessID, ExerciseID, Duration) VALUES (?, ?, ?)',
+      [parseInt(fitnessID), parseInt(exerciseID), parseInt(duration)],
+      function(error) {
+        if (error) {
+          console.error('Error inserting fitness-to-exercise data into the database:', error);
+          return res.status(500).send('Internal Server Error');
+        }
+  
+        res.redirect('/');
+      });
+});
+
+app.post('/update-member', function(req, res) {
+    const {memberID, email, height, weight, age} = req.body;
+
+    pool.query('UPDATE Member SET Email = ?, Height = ?, Weight = ?, Age = ? WHERE MemberID = ?',
+        [email, parseInt(height), parseInt(weight), parseInt(age), parseInt(memberID)], function(error) {
+            if (error) {
+                console.log('Error updating data to database: ', error);
+                return res.status(500);
+            }
+
             res.redirect('/');
+        });
+});
+
+app.post('/delete-member', function(req, res) {
+    const {memberID} = req.body;
+
+    pool.query('DELETE FROM Member WHERE MemberID = ?', [parseInt(memberID)], function(error) {
+        if (error) {
+            console.log('Error deleting from databse: ', error);
+            return res.status(500);
         }
-    })
-})
-*/
 
-app.delete('/delete-person-ajax/', function(req,res,next){
-  let data = req.body;
-  let personID = parseInt(data.id);
-  let deleteBsg_Cert_People = `DELETE FROM bsg_cert_people WHERE pid = ?`;
-  let deleteBsg_People= `DELETE FROM bsg_people WHERE id = ?`;
-
-
-        // Run the 1st query
-        db.pool.query(deleteBsg_Cert_People, [personID], function(error, rows, fields){
-            if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-            }
-
-            else
-            {
-                // Run the second query
-                db.pool.query(deleteBsg_People, [personID], function(error, rows, fields) {
-
-                    if (error) {
-                        console.log(error);
-                        res.sendStatus(400);
-                    } else {
-                        res.sendStatus(204);
-                    }
-                })
-            }
-})});
-
-app.put('/put-person-ajax', function(req,res,next){
-  let data = req.body;
-
-  let homeworld = parseInt(data.homeworld);
-  let person = parseInt(data.fullname);
-
-  queryUpdateWorld = `UPDATE bsg_people SET homeworld = ? WHERE bsg_people.id = ?`;
-  selectWorld = `SELECT * FROM bsg_planets WHERE id = ?`
-
-        // Run the 1st query
-        db.pool.query(queryUpdateWorld, [homeworld, person], function(error, rows, fields){
-            if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-            }
-
-            // If there was no error, we run our second query and return that data so we can use it to update the people's
-            // table on the front-end
-            else
-            {
-                // Run the second query
-                db.pool.query(selectWorld, [homeworld], function(error, rows, fields) {
-
-                    if (error) {
-                        console.log(error);
-                        res.sendStatus(400);
-                    } else {
-                        res.send(rows);
-                    }
-                })
-            }
-})});
+        res.redirect('/');
+    });
+});
 
 /*
  * LISTENER
