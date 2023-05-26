@@ -5,16 +5,12 @@
  */
 
 var express = require('express');
-var exphbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 var mysql = require('mysql2');
 
-var app = express();
-app.engine('hbs', exphbs({extname: '.hbs'}));
-app.set('view engine', 'hbs');
+PORT = 5741;
 
-app.use(express.static('public'));
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+var app = express();
 
 const pool = mysql.createPool({
     host: 'localhost',
@@ -24,7 +20,12 @@ const pool = mysql.createPool({
     connectionLimit: 10
 })
 
+app.engine('hbs', exphbs({extname: '.hbs'}));
+app.set('view engine', 'hbs');
 
+app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 /* 
  * ROUTES
