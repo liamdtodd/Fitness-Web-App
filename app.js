@@ -89,7 +89,7 @@ app.get('/', function(req, res) {
 app.post('/add-member', function(req, res) {
     const {inputName, inputEmail, inputHeight, inputWeight, inputAge} = req.body
 
-    pool.query('INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES (?, ?, ?, ?, ?',
+    pool.query('INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES (?, ?, ?, ?, ?)',
         [inputName, inputEmail, parseInt(inputHeight), parseInt(inputWeight), parseInt(inputAge)], function(error) {
             if (error) {
                 console.log('Error inserting to database: ', error);
@@ -100,12 +100,12 @@ app.post('/add-member', function(req, res) {
         });
 });
 
-app.post('/add-fitness', (req, res) => {
-    const { memberID, date, weight, caloriesBurned } = req.body;
+app.post('/add-fitness', function(req, res) {
+    const {memberID, type, time } = req.body;
   
     db.pool.query(
-      'INSERT INTO Fitness (MemberID, Date, Weight, CaloriesBurned) VALUES (?, ?, ?, ?)',
-      [parseInt(memberID), date, parseInt(weight), parseInt(caloriesBurned)],
+      'INSERT INTO Fitness (MemberID, Type, Time) VALUES (?, ?, ?)',
+      [parseInt(memberID), type, parseInt(time)],
       function(error) {
         if (error) {
           console.error('Error inserting fitness data into the database:', error);
@@ -116,10 +116,11 @@ app.post('/add-fitness', (req, res) => {
       });
 });
 
-app.post('/add-exercise', (req, res) => {
-    const { exerciseName } = req.body;
+app.post('/add-exercise', function(req, res) {
+    const {name, sets, reps, weight} = req.body;
   
-    db.pool.query('INSERT INTO Exercise (Name) VALUES (?)', [exerciseName], function(error) {
+    db.pool.query('INSERT INTO Exercise (Name, Sets, Repetitions, Weight) VALUES (?, ?, ?, ?)', 
+        [exerciseName, parseInt(sets), parseInt(reps), parseInt(weight)], function(error) {
       if (error) {
         console.error('Error inserting exercise data into the database:', error);
         return res.status(500).send('Internal Server Error');
@@ -129,10 +130,11 @@ app.post('/add-exercise', (req, res) => {
     });
 });
 
-app.post('/add-nutrient', (req, res) => {
-    const { nutrientName } = req.body;
+app.post('/add-nutrient', function(req, res) {
+    const {type, count, memberID} = req.body;
   
-    db.pool.query('INSERT INTO Nutrients (Name) VALUES (?)', [nutrientName], function(error) {
+    db.pool.query('INSERT INTO Nutrients (Type, NutrientCount, MemberID) VALUES (?, ?, ?)', 
+        [type, parseInt(count), parseInt(memberID)], function(error) {
       if (error) {
         console.error('Error inserting nutrient data into the database:', error);
         return res.status(500).send('Internal Server Error');
@@ -142,12 +144,12 @@ app.post('/add-nutrient', (req, res) => {
     });
 });
 
-app.post('/add-fitnesstoexercise', (req, res) => {
-    const { fitnessID, exerciseID, duration } = req.body;
+app.post('/add-fitnesstoexercise', function(req, res) {
+    const { fitnessID, exerciseID } = req.body;
   
     db.pool.query(
-      'INSERT INTO FitnesstoExercise (FitnessID, ExerciseID, Duration) VALUES (?, ?, ?)',
-      [parseInt(fitnessID), parseInt(exerciseID), parseInt(duration)],
+      'INSERT INTO FitnesstoExercise (FitnessID, ExerciseID) VALUES (?, ?, ?)',
+      [parseInt(fitnessID), parseInt(exerciseID)],
       function(error) {
         if (error) {
           console.error('Error inserting fitness-to-exercise data into the database:', error);
