@@ -69,6 +69,47 @@
 
 
 
+<table id="member-table">
+    >
+    {{!-- Header section --}}
+    <thead>
+
+        {{
+!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --
+        }}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr data-value={{this.id}}>
+            >
+            <td>{{this.MemberID}}</td>
+            <td>{{this.Name}}</td>
+            <td>{{this.Email}}</td>
+            <td>{{this.Height}}</td>
+            <td>{{this.Weight}}</td>
+            <td>{{this.Age}}</td>
+            <td><button onclick="deleteMember({{this.MemberID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_member.js"></script>
+
+
+
 <h2>Search Using an HTML Form</h2>
 <p>Search by last name using the field below. Partial last names are OK too!</p>
 <form id="search-member-html" method='GET' action='/'>
