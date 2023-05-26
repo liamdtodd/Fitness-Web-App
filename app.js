@@ -63,7 +63,6 @@ app.get('/', function(req, res) {
                             member: memberResults
                         };
 
-                        console.log('member: ', data)
                         res.render('index', data);
                     });
                 });
