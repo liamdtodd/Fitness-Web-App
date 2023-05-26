@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CRUD Example</title>
-</head>
-<body>
     <h1>Member Table</h1>
 
     <table id="member-table">
         <thead>
             <tr>
-                {{#each members.[0]}}
-                <th>{{@key}}</th>
-                {{/each}}
-                <th>Actions</th>
+                <th>Member ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Age</th>
             </tr>
         </thead>
         <tbody>
@@ -88,5 +84,3 @@
     <script src="/update_member.js"></script>
     <script src="/delete_member.js"></script>
     <!-- Include other JS scripts if needed -->
-</body>
-</html>
