@@ -1,0 +1,27 @@
+<html>
+    <h1>Nutrients Table</h1>
+
+    <table id="nurient-table">
+        <thead>
+            <tr>
+                <th>Nutrient ID</th>
+                <th>Type</th>
+                <th>Nutrient Count</th>
+                <th>Member ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each nutrient}}
+            <tr>
+                <td>{{NutrientID}}</td>
+                <td>{{Type}}</td>
+                <td>{{Email}}</td>
+                <td>{{MemberID}}</td>
+                <td>
+                    <button onclick="updateNutrient('{{NutrientID}}')">Update</button>
+                    <button onclick="deleteNutrient('{{NutrientID}}')">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
