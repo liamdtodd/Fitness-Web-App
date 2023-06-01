@@ -73,6 +73,7 @@ app.get('/', function(req, res) {
 
 // POST ROUTES
 
+//add row to Member
 app.post('/add-member', function(req, res) {
     const {inputName, inputEmail, inputHeight, inputWeight, inputAge} = req.body
 
@@ -87,6 +88,7 @@ app.post('/add-member', function(req, res) {
         });
 });
 
+//add row to Fitness
 app.post('/add-fitness', function(req, res) {
     const {memberID, type, time } = req.body;
   
@@ -103,6 +105,7 @@ app.post('/add-fitness', function(req, res) {
       });
 });
 
+//add row to Exercise
 app.post('/add-exercise', function(req, res) {
     const {name, sets, reps, weight} = req.body;
   
@@ -117,7 +120,8 @@ app.post('/add-exercise', function(req, res) {
     });
 });
 
-app.post('/add-nutrient', function(req, res) {
+//add row to Nutrients
+app.post('/add-nutrients', function(req, res) {
     const {type, count, memberID} = req.body;
   
     db.pool.query('INSERT INTO Nutrients (Type, NutrientCount, MemberID) VALUES (?, ?, ?)', 
@@ -131,6 +135,7 @@ app.post('/add-nutrient', function(req, res) {
     });
 });
 
+//add row to FitnesstoExercise
 app.post('/add-fitnesstoexercise', function(req, res) {
     const { fitnessID, exerciseID } = req.body;
   
@@ -147,6 +152,7 @@ app.post('/add-fitnesstoexercise', function(req, res) {
       });
 });
 
+//update Member
 app.post('/update-member', function(req, res) {
     const {memberID, email, height, weight, age} = req.body;
 
@@ -161,12 +167,71 @@ app.post('/update-member', function(req, res) {
         });
 });
 
+//update Nutrients
+app.post('/update-nutrients', function(req, res) {
+    const {nutrientID, type, nutrientCount, memberID} = req.body;
+
+    db.pool.query('UPDATE Nutrients SET Type = ?, NutrientCount = ?, MemberID = ? WHERE NutrientID = ?', 
+        [type, parseInt(nutrientCount), parseInt(memberID), parseInt(nutrientID)], function(error) {
+            if (error) {
+                console.log('Error updating database: ', error);
+                return res.status(500);
+            }
+
+            res.redirect('/');
+        });
+});
+
+//update FitnesstoExercise
+app.post('/update-fit-to-exc', function(req, res) {
+    const {oldworkoutID, oldexerciseID, newworkoutID, newexerciseID} = req.body;
+
+    db.pool.query('UPDATE FitnesstoExercise SET WorkoutID = ?, ExerciseID = ? WHERE WorkoutID = ? AND ExerciseID = ?', 
+        [parseInt(newworkoutID), parseInt(newexerciseID), parseInt(oldworkoutID), parseInt(oldexerciseID)], function(error) {
+            if (error) {
+                console.log('Error updating database: ', error);
+                return res.status(500);
+            }
+
+            res.redirect('/');
+        });
+});
+
+//delete a Member
 app.post('/delete-member', function(req, res) {
     const {memberID} = req.body;
 
     db.pool.query('DELETE FROM Member WHERE MemberID = ?', [parseInt(memberID)], function(error) {
         if (error) {
             console.log('Error deleting from databse: ', error);
+            return res.status(500);
+        }
+
+        res.redirect('/');
+    });
+});
+
+//delete row from Nutrients
+app.post('/delete-nutrients', function(req, res) {
+    const {nutrientID} = req.body;
+
+    db.pool.query('DELETE FROM Nutrients WHERE NutrientID = ?', [parseInt(nutrientID)], function(error) {
+        if (error) {
+            console.log('Error deleting from database: ', error);
+            return res.status(500);
+        }
+
+        res.redirect('/');
+    });
+});
+
+//delete row from FitnesstoExercise
+app.post('/delete-fit-to-exc', function(req, res) {
+    const {workoutID, exerciseID} = req.body;
+
+    db.pool.query('DELETE FROM FitnesstoExercise WHERE WorkoutID = ? AND ExerciseID = ?', [parseInt(workoutID), parseInt(exerciseID)], function(error) {
+        if (error) {
+            console.log('Error deleting data from database: ', error);
             return res.status(500);
         }
 
