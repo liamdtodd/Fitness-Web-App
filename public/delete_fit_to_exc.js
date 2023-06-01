@@ -1,12 +1,12 @@
-function deleteMember(memberID) {
+function deleteFitToExc(WorkoutID) {
      // Put our data we want to send in a javascript object
      let data = {
-         id: memberID
+         id: WorkoutID
      };
     
      // Setup our AJAX request
      var xhttp = new XMLHttpRequest();
-     xhttp.open("DELETE", "/delete-member-ajax", true);
+     xhttp.open("DELETE", "/delete-fit-to-exc-ajax", true);
      xhttp.setRequestHeader("Content-type", "application/json");
 
      // Tell our AJAX request how to resolve
@@ -14,7 +14,7 @@ function deleteMember(memberID) {
          if (xhttp.readyState == 4 && xhttp.status == 204) {
 
              // Add the new data to the table
-             deleteRow(memberID);
+             deleteRow(fit-to-excID);
 
          }
          else if (xhttp.readyState == 4 && xhttp.status != 204) {
@@ -26,13 +26,13 @@ function deleteMember(memberID) {
  }
 
 
-function deleteRow(memberID){
+function deleteRow(WorkoutID){
 
-    let table = document.getElementById("member-table");
+    let table = document.getElementById("fit-to-exc-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
        //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == memberID) {
+       if (table.rows[i].getAttribute("data-value") == WorkoutID) {
             table.deleteRow(i);
             break;
        }
