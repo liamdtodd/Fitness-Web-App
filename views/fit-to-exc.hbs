@@ -1,0 +1,82 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <table id="fit-to-exc-table">
+        <h1>FitnessToExercise Table</h1>
+        <thead>
+            <tr>
+                <th>Workout ID</th>
+                <th>ExerciseID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each member}}
+            <tr>
+                <td>{{WorkoutID}}</td>
+                <td>{{ExerciseID}}</td>
+                <td>
+                    <button onclick="updateFitToExc('{{WorkoutID}}')">Update</button>
+                    <button onclick="deleteFitToExc('{{ExerciseID}}')">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>3</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Add Fitness To Exercise</h2>
+
+    <form action="/add-fit-to-exc" method="POST">
+        <label for="inputWorkoutID">WorkoutID:</label>
+        <input type="number" id="inputWorkoutID" name="inputWorkoutID" required>
+
+        <label for="inputExerciseID">ExerciseID:</label>
+        <input type="number" id="inputExerciseID" name="inputExerciseID" required>
+
+        <input type="submit" value="Add Fitness To Exercise">
+    </form>
+
+    <!-- Update Member Form -->
+    <h2>Update Fitness To Exercise</h2>
+    <form id="update-fit-to-exc-form-ajax">
+        <label for="updateSelect">Select WorkoutID:</label>
+        <select name="updateSelect" id="updateSelect">
+            <option value="">Select a WorkoutID</option>
+            {{#each member}}
+            <option value="{{this.WorkoutID}}">{{this.ExerciseID}}</option>
+            {{/each}}
+        </select>
+
+        <label for="updateExerciseID">New ExerciseID:</label>
+        <input type="number" id="updateExerciseID" name="updateExerciseID" required>
+
+        <input type="submit" value="Update">
+    </form>
+
+    <!-- Delete Member Form -->
+    <h2>Delete Fitness To Exercise</h2>
+    <form id="delete-fit-to-exc-form-ajax">
+        <label for="deleteSelect">Select WorkoutID:</label>
+        <select name="deleteSelect" id="deleteSelect">
+            <option value="">Select a WorkoutID</option>
+            {{#each members}}
+            <option value="{{this.WorkoutID}}">{{this.ExerciseID}}</option>
+            {{/each}}
+        </select>
+
+        <input type="submit" value="Delete">
+    </form>
+
+    <script src="./js/update_member.js"></script>
+    <script src="./js/delete_member.js"></script>
+    <!-- Include other JS scripts if needed -->
