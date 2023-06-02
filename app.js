@@ -105,13 +105,13 @@ app.post('/add-member', function(req, res) {
 });
 
 //add row to FitnesstoExercise
-app.post('/add-fit-to-exc', function (req, res) {
+app.post('/add-fit-to-exc-ajax', function (req, res) {
     const { WorkoutID, ExerciseID } = req.body;
 
     console.log(WorkoutID)
     console.log(ExerciseID)
     db.pool.query(
-        'INSERT INTO FitnesstoExercise (FitnessID, ExerciseID) VALUES (?, ?)',
+        'INSERT INTO FitnesstoExercise (WorkoutID, ExerciseID) VALUES (?, ?)',
         [parseInt(WorkoutID), parseInt(ExerciseID)], function (error) {
             if (error) {
                 console.error('Error inserting fitness-to-exercise data into the database:', error);
