@@ -24,7 +24,7 @@ updateMemberForm.addEventListener("submit", function (e) {
 
     // Put our data we want to send in a javascript object
     let data = {
-        NutrientID: NutrientIDValue,
+        ExerciseID: ExerciseIDValue,
         Sets: SetsValue,
     }
     
@@ -52,7 +52,7 @@ updateMemberForm.addEventListener("submit", function (e) {
 })
 
 
-function updateRow(data, NutrientID){
+function updateRow(data, ExerciseID){
     let parsedData = JSON.parse(data);
     
     let table = document.getElementById("exercise-table");
@@ -60,7 +60,7 @@ function updateRow(data, NutrientID){
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
        //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == NutrientID) {
+       if (table.rows[i].getAttribute("data-value") == ExerciseID) {
 
             // Get the location of the row where we found the matching member ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
