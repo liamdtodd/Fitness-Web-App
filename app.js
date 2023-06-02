@@ -290,6 +290,81 @@ app.delete('/delete-member-ajax/', function (req, res, next) {
     })
 });
 
+// delete exercise
+app.delete('/delete-exercise-ajax/', function (req, res, next) {
+    let data = req.body;
+    let ExerciseID = parseInt(data.id);
+    let DeleteExercise = `DELETE FROM Exercise WHERE Exercise.ExerciseID = ?`;
+    let deleteMember2 = `DELETE FROM bsg_people WHERE id = ?`;
+
+
+    // Run the 1st query
+    db.pool.query(DeleteExercise, [ExerciseID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+// delete nutrient
+app.delete('/delete-nutrient-ajax/', function (req, res, next) {
+    let data = req.body;
+    let NutrientID = parseInt(data.id);
+    let deleteNutrient = `DELETE FROM Nutrients WHERE Nutrients.NutrientID = ?`;
+    let deleteMember2 = `DELETE FROM bsg_people WHERE id = ?`;
+
+
+    // Run the 1st query
+    db.pool.query(deleteNutrient, [NutrientID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+// delete fitness
+app.delete('/delete-fitness-ajax/', function (req, res, next) {
+    let data = req.body;
+    let WorkoutID = parseInt(data.id);
+    let deleteWorkout = `DELETE FROM Fitness WHERE Fitness.WorkoutID = ?`;
+    let deleteMember2 = `DELETE FROM bsg_people WHERE id = ?`;
+
+
+    // Run the 1st query
+    db.pool.query(deleteWorkout, [WorkoutID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+// detele fit-to-exc
+app.delete('/delete-fit-to-exc-ajax/', function (req, res, next) {
+    let data = req.body;
+    let WorkoutID = parseInt(data.id);
+    let deleteFitToExc = `DELETE FROM FitnesstoExercise WHERE FitnesstoExercise.WorkoutID = ?`;
+    let deleteMember2 = `DELETE FROM bsg_people WHERE id = ?`;
+
+
+    // Run the 1st query
+    db.pool.query(deleteFitToExc, [WorkoutID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
 /*
  * LISTENER
  */
