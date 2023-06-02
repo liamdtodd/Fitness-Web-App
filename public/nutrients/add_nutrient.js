@@ -1,5 +1,5 @@
 // Get the objects we need to modify
-let addMemberForm = document.getElementById('add-fitness-form-ajax');
+let addMemberForm = document.getElementById('add-member-form-ajax');
 
 // Modify the objects we need
 addMemberForm.addEventListener("submit", function (e) {
@@ -9,24 +9,24 @@ addMemberForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
     let inputType = document.getElementById("inputType");
-    let inputTime = document.getElementById("inputTime");
+    let inputCount = document.getElementById("inputNutrientCount");
     let inputMemberID = document.getElementById("inputMemberID");
 
     // Get the values from the form fields
     let TypeValue = inputType.value;
-    let TimeValue = inputTime.value;
+    let CountValue = inputCount.value;
     let MemberIDValue = inputMemberID.value;
 
     // Put our data we want to send in a javascript object
     let data = {
         Type: TypeValue,
-        Time: TimeValue,
+        NutrientCount: CountValue,
         MemberID: MemberIDValue
     }
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-fitness-ajax", true);
+    xhttp.open("POST", "/add-nutrient-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -38,7 +38,7 @@ addMemberForm.addEventListener("submit", function (e) {
 
             // Clear the input fields for another transaction
             inputType.value = '';
-            inputTime.value = '';
+            inputCount.value = '';
             inputMemberID.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -57,7 +57,7 @@ addMemberForm.addEventListener("submit", function (e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("fitness-table");
+    let currentTable = document.getElementById("nutrient-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -70,19 +70,19 @@ addRowToTable = (data) => {
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
     let TypeCell = document.createElement("TD");
-    let TimeCell = document.createElement("TD");
+    let CountCell = document.createElement("TD");
     let IDCell = document.createElement("TD");
 
     // Fill the cells with correct data
     idCell.innerText = newRow.id;
     TypeCell.innerText = newRow.Type;
-    TimeCell.innerText = newRow.Time;
+    CountCell.innerText = newRow.NutrientCount;
     IDCell.innerText = newRow.MemberID;
 
     // Add the cells to the row 
     row.appendChild(idCell);
     row.appendChild(TypeCell);
-    row.appendChild(TimeCell);
+    row.appendChild(CountCell);
     row.appendChild(IDCell);
     
     // Add the row to the table
