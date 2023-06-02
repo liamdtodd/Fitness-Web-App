@@ -263,31 +263,18 @@ app.listen(PORT, function() {
 
 app.delete('/delete-member-ajax/', function (req, res, next) {
     let data = req.body;
-    let personID = parseInt(data.id);
-    let deleteBsg_Cert_People = `DELETE FROM bsg_cert_people WHERE pid = ?`;
-    let deleteBsg_People = `DELETE FROM bsg_people WHERE id = ?`;
+    let MemberID = parseInt(data.id);
+    let deleteMember = `DELETE FROM Member WHERE Member.MemberID = ?`;
+    let deleteMember2 = `DELETE FROM bsg_people WHERE id = ?`;
 
 
     // Run the 1st query
-    db.pool.query(deleteBsg_Cert_People, [personID], function (error, rows, fields) {
+    db.pool.query(deleteMember, [MemberID], function (error, rows, fields) {
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error);
             res.sendStatus(400);
-        }
-
-        else {
-            // Run the second query
-            db.pool.query(deleteBsg_People, [personID], function (error, rows, fields) {
-
-                if (error) {
-                    console.log(error);
-                    res.sendStatus(400);
-                } else {
-                    res.sendStatus(204);
-                }
-            })
         }
     })
 });
@@ -298,7 +285,6 @@ app.put('/put-member-ajax', function (req, res, next) {
 
     let email = data.Email;
     let memberID = parseInt(data.MemberID);
-    console.log(email)
 
     queryUpdateEmail = 'UPDATE Member SET Email = ? WHERE Member.MemberID = ?';
     selectMember = `SELECT * FROM Member WHERE Member.MemberID = ?`
