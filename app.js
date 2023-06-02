@@ -292,17 +292,20 @@ app.delete('/delete-member-ajax/', function (req, res, next) {
     })
 });
 
+
 app.put('/put-member-ajax', function (req, res, next) {
     let data = req.body;
 
+    let email = data.Email;
     let memberID = parseInt(data.MemberID);
-    let name = parseInt(data.Name);
+    console.log(email)
 
-    queryUpdateWorld = `UPDATE bsg_people SET homeworld = ? WHERE bsg_people.id = ?`;
-    selectWorld = `SELECT * FROM bsg_planets WHERE id = ?`
+    queryUpdateEmail = 'UPDATE Member SET Email = ? WHERE Member.MemberID = ?';
+    selectMember = `SELECT * FROM Member WHERE Member.MemberID = ?`
+
 
     // Run the 1st query
-    db.pool.query(queryUpdateWorld, [homeworld, person], function (error, rows, fields) {
+    db.pool.query(queryUpdateEmail, [email, memberID], function (error, rows, fields) {
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -314,7 +317,7 @@ app.put('/put-member-ajax', function (req, res, next) {
         // table on the front-end
         else {
             // Run the second query
-            db.pool.query(selectWorld, [homeworld], function (error, rows, fields) {
+            db.pool.query(selectMember, [memberID], function (error, rows, fields) {
 
                 if (error) {
                     console.log(error);
