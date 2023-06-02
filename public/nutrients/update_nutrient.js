@@ -23,7 +23,7 @@ updateMemberForm.addEventListener("submit", function (e) {
     // Put our data we want to send in a javascript object
     let data = {
         NutrientID: NutrientIDValue,
-        Count: CountValue,
+        NutrientCount: CountValue,
     }
     
     // Setup our AJAX request
@@ -67,7 +67,7 @@ function updateRow(data, NutrientID){
             let td = updateRowIndex.getElementsByTagName("td")[3];
 
             // Reassign homeworld to our value we updated to
-            td.innerHTML = parsedData[0].name; 
+            td.innerHTML = parsedData[0].NutrientCount; 
        }
     }
 }
