@@ -1,87 +1,12 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<body>
+    <h1>Index</h1>
 
-    <table id="member-table">
-        <h1>Member Table</h1>
-        <thead>
-            <tr>
-                <th>Member ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Height</th>
-                <th>Weight</th>
-                <th>Age</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each member}}
-            <tr>
-                <td>{{MemberID}}</td>
-                <td>{{Name}}</td>
-                <td>{{Email}}</td>
-                <td>{{Height}}</td>
-                <td>{{Weight}}</td>
-                <td>{{Age}}</td>
-                <td>
-                    <button onclick="updateMember('{{MemberID}}')">Update</button>
-                    <button onclick="deleteMember('{{MemberID}}')">Delete</button>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+    <h4>Welcome to our Fitness and Nutrition App!</h4>
+    <h6>Links:</h6>
 
-    <h2>Add Member</h2>
-
-    <form action="/add-member" method="POST">
-        <label for="inputName">Name:</label>
-        <input type="text" id="inputName" name="inputName" required>
-
-        <label for="inputEmail">Email:</label>
-        <input type="email" id="inputEmail" name="inputEmail" required>
-
-        <label for="inputHeight">Height:</label>
-        <input type="number" id="inputHeight" name="inputHeight" required>
-
-        <label for="inputWeight">Weight:</label>
-        <input type="number" id="inputWeight" name="inputWeight" required>
-
-        <label for="inputAge">Age:</label>
-        <input type="number" id="inputAge" name="inputAge" required>
-
-        <input type="submit" value="Add Member">
-    </form>
-
-    <!-- Update Member Form -->
-    <h2>Update Member</h2>
-    <form id="update-member-form-ajax">
-        <label for="updateSelect">Select Member:</label>
-        <select name="updateSelect" id="updateSelect">
-            <option value="">Select a Member</option>
-            {{#each member}}
-            <option value="{{this.MemberID}}">{{this.Name}}</option>
-            {{/each}}
-        </select>
-
-        <label for="updateEmail">New Email:</label>
-        <input type="text" id="updateEmail" name="updateEmail" required>
-
-        <input type="submit" value="Update">
-    </form>
-
-    <!-- Delete Member Form -->
-    <h2>Delete Member</h2>
-    <form id="delete-member-form-ajax">
-        <label for="deleteSelect">Select Member:</label>
-        <select name="deleteSelect" id="deleteSelect">
-            <option value="">Select a Member</option>
-            {{#each member}}
-            <option value="{{this.MemberID}}">{{this.Name}}</option>
-            {{/each}}
-        </select>
-
-        <input type="submit" value="Delete">
-    </form>
-
-    <script src="../update_member.js"></script>
-    <script src="../delete_member.js"></script>
-    <!-- Include other JS scripts if needed -->
+    <a href="/member">Members</a>
+    <a href="/nutrients">Nutrients</a>
+    <a href="/exercise">Exercises</a>
+    <a href="/fitness">Fitness</a>
+    <a href="/fit-to-exc">FitnesstoExercise</a>
+</body>
