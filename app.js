@@ -163,10 +163,10 @@ app.post('/add-fitness', function (req, res) {
 
 //add row to Exercise
 app.post('/add-exercise', function (req, res) {
-    const { InputName, InputSets, InputRepititions, InputWeight } = req.body;
+    const { InputName, InputSets, InputRepetitions, InputWeight } = req.body;
 
     db.pool.query('INSERT INTO Exercise (Name, Sets, Repetitions, Weight) VALUES (?, ?, ?, ?)',
-        [InputName, parseInt(InputSets), parseInt(InputRepititions), parseInt(InputWeight)], function (error) {
+        [InputName, parseInt(InputSets), parseInt(InputRepetitions), parseInt(InputWeight)], function (error) {
             if (error) {
                 console.error('Error inserting exercise data into the database:', error);
                 return res.status(500).send('Internal Server Error');
