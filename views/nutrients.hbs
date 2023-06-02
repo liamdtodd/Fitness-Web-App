@@ -24,4 +24,53 @@
             </tr>
             {{/each}}
         </tbody>
+
+        <h2>Add to Nutrients</h2>
+
+        <form action="/add-nutrient" method="POST">
+            <label for="inputType">Type:</label>
+            <input type="text" id="inputType" name="inputType" required>
+
+            <label for="inputNutrientCount">Nutrient Count:</label>
+            <input type="number" id="inputNutrientCount" name="inputNutrientCount" required>
+
+            <label for="inputMemberID">MemberID:</label>
+            <input type="number" id="inputMemberID" name="inputMemberID" required>
+
+            <input type="submit" value="Add Nutrient">
+        </form>
     </table>
+
+    <!-- Update Nutrients Form -->
+    <h2>Update Nutrients</h2>
+    <form id="update-nutrient-form-ajax">
+        <label for="updateSelect">Select Nutrient:</label>
+        <select name="updateSelect" id="updateSelect">
+            <option value="">Select a Nutrient</option>
+            {{#each nutrient}}
+            <option value="{{this.NutrientID}}">{{this.NutrientID}}</option>
+            {{/each}}
+        </select>
+
+        <label for="updateCount">New Nutrient Count:</label>
+        <input type="number" id="updateCount" name="updateCount" required>
+
+        <input type="submit" value="Update">
+    </form>
+
+    <!-- Delete Nutrients Form -->
+    <h2>Delete Nutrients</h2>
+    <form id="delete-nutrient-form-ajax">
+        <label for="deleteSelect">Select Nutrient:</label>
+        <select name="deleteSelect" id="deleteSelect">
+            <option value="">Select a Nutrient</option>
+            {{#each nutrient}}
+            <option value="{{this.NutrientID}}">{{this.NutrientID}}</option>
+            {{/each}}
+        </select>
+
+        <input type="submit" value="Delete">
+    </form>
+
+    <script src="../update_nutrient.js"></script>
+    <script src="../delete_nutrient.js"></script>
