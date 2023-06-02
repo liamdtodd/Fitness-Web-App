@@ -130,13 +130,11 @@ app.post('/add-member', function(req, res) {
 
 //add row to FitnesstoExercise
 app.post('/add-fit-to-exc-ajax', function (req, res) {
-    const { InputWorkoutID, InputExerciseID } = req.body;
+    const { inputWorkoutID, inputExerciseID } = req.body;
 
-    console.log(WorkoutID)
-    console.log(ExerciseID)
     db.pool.query(
-        'INSERT INTO FitnesstoExercise (WorkoutID, InputExerciseID) VALUES (?, ?)',
-        [parseInt(InputWorkoutID), parseInt(InputExerciseID)], function (error) {
+        'INSERT INTO FitnesstoExercise (WorkoutID, ExerciseID) VALUES (?, ?)',
+        [parseInt(inputWorkoutID), parseInt(inputExerciseID)], function (error) {
             if (error) {
                 console.error('Error inserting fitness-to-exercise data into the database:', error);
                 return res.status(500);
@@ -148,11 +146,11 @@ app.post('/add-fit-to-exc-ajax', function (req, res) {
 
 //add row to Fitness
 app.post('/add-fitness-ajax', function (req, res) {
-    const { InputMemberID, InputType, InputTime } = req.body;
+    const { inputMemberID, inputType, inputTime } = req.body;
 
     db.pool.query(
         'INSERT INTO Fitness (MemberID, Type, Time) VALUES (?, ?, ?)',
-        [parseInt(InputMemberID), InputType, parseInt(InputTime)],
+        [parseInt(inputMemberID), inputType, parseInt(inputTime)],
         function (error) {
             if (error) {
                 console.error('Error inserting fitness data into the database:', error);
@@ -180,11 +178,11 @@ app.post('/add-exercise-form-ajax', function (req, res) {
 });
 
 //add row to Nutrients
-app.post('/add-nutrient-ajax', function (req, res) {
-    const { InputType, InputNutrientCount, InputMemberID } = req.body;
+app.post('/add-nutrient', function (req, res) {
+    const { inputType, inputNutrientCount, inputMemberID } = req.body;
 
     db.pool.query('INSERT INTO Nutrients (Type, NutrientCount, MemberID) VALUES (?, ?, ?)',
-        [InputType, parseInt(InputNutrientCount), parseInt(InputMemberID)], function (error) {
+        [inputType, parseInt(inputNutrientCount), parseInt(inputMemberID)], function (error) {
             if (error) {
                 console.error('Error inserting nutrient data into the database:', error);
                 return res.status(500).send('Internal Server Error');
