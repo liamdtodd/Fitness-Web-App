@@ -29,46 +29,7 @@ var db = require('./database/db-connector')
 
 // GET ROUTES
 app.get('/', function(req, res) {
-    db.pool.query('SELECT * FROM Member', function(error, memberResults) {
-        if (error) {
-            console.log('Error getting data from database: ', error);
-            return res.status(500);
-        }
-
-        db.pool.query('SELECT * FROM Fitness', function(error, fitnessResults) {
-            if (error) {
-                console.log('Error getting data from database: ', error);
-                return res.status(500);
-            }
-
-            db.pool.query('SELECT * FROM Exercise', function(error, exerciseResults) {
-                if (error) {
-                    console.log('Error getting data from database: ', error);
-                    return res.status(500);
-                }
-
-                db.pool.query('SELECT * FROM Nutrients', function(error, nutrientResults) {
-                    if (error) {
-                        console.log('Error getting data from database: ', error);
-                        return res.status(500);
-                    }
-
-                    db.pool.query('SELECT * FROM FitnesstoExercise', function(error, fitexerResults) {
-                        if (error) {
-                            console.log('Error getting data from database: ', error);
-                            return res.status(500);
-                        }
-
-                        const data = {
-                            member: memberResults
-                        };
-
-                        res.render('index', data);
-                    });
-                });
-            });
-        });
-    });
+    res.render('index', {});
 });
 
 
