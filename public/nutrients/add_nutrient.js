@@ -8,9 +8,9 @@ addMemberForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputType = document.getElementById("inputType");
-    let inputCount = document.getElementById("inputNutrientCount");
-    let inputMemberID = document.getElementById("inputMemberID");
+    let inputType = document.getElementById("input-Type");
+    let inputCount = document.getElementById("input-NutrientCount");
+    let inputMemberID = document.getElementById("input-MemberID");
 
     // Get the values from the form fields
     let TypeValue = inputType.value;

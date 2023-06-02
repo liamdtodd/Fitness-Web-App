@@ -1,5 +1,5 @@
 // Get the objects we need to modify
-let addMemberForm = document.getElementById('add-member-form-ajax');
+let addMemberForm = document.getElementById('add-exercise-form-ajax');
 
 // Modify the objects we need
 addMemberForm.addEventListener("submit", function (e) {
@@ -9,30 +9,27 @@ addMemberForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
     let inputName = document.getElementById("input-Name");
-    let inputEmail = document.getElementById("input-Email");
-    let inputHeight = document.getElementById("input-Height");
+    let inputSets = document.getElementById("input-Sets");
+    let inputReps = document.getElementById("input-Repetitions");
     let inputWeight = document.getElementById("input-Weight");
-    let inputAge = document.getElementById("input-Age");
 
     // Get the values from the form fields
     let NameValue = inputName.value;
-    let EmailValue = inputEmail.value;
-    let HeightValue = inputHeight.value;
+    let SetsValue = inputSets.value;
+    let RepsValue = inputReps.value;
     let WeightValue = inputWeight.value;
-    let AgeValue = inputAge.value;
 
     // Put our data we want to send in a javascript object
     let data = {
         Name: NameValue,
-        Email: EmailValue,
-        Height: HeightValue,
+        Sets: SetsValue,
+        Repetitions: RepsValue,
         Weight: WeightValue,
-        Age: AgeValue
     }
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-member-ajax", true);
+    xhttp.open("POST", "/add-exercise-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -44,10 +41,9 @@ addMemberForm.addEventListener("submit", function (e) {
 
             // Clear the input fields for another transaction
             inputName.value = '';
-            inputEmail.value = '';
-            inputHeight.value = '';
+            inputSets.value = '';
+            inputReps.value = '';
             inputWeight.value = '';
-            inputAge.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -65,7 +61,7 @@ addMemberForm.addEventListener("submit", function (e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("member-table");
+    let currentTable = document.getElementById("exercise-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -78,26 +74,23 @@ addRowToTable = (data) => {
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
     let NameCell = document.createElement("TD");
-    let EmailCell = document.createElement("TD");
-    let HeightCell = document.createElement("TD");
+    let SetsCell = document.createElement("TD");
+    let RepsCell = document.createElement("TD");
     let WeightCell = document.createElement("TD");
-    let AgeCell = document.createElement("TD");
 
     // Fill the cells with correct data
     idCell.innerText = newRow.id;
     NameCell.innerText = newRow.Name;
-    EmailCell.innerText = newRow.Email;
-    HeightCell.innerText = newRow.Height;
+    SetsCell.innerText = newRow.Sets;
+    RepsCell.innerText = newRow.Repetitions;
     WeightCell.innerText = newRow.Weight;
-    AgeCell.innerText = newRow.Age;
 
     // Add the cells to the row 
     row.appendChild(idCell);
     row.appendChild(NameCell);
-    row.appendChild(EmailCell);
-    row.appendChild(HeightCell);
+    row.appendChild(SetsCell);
+    row.appendChild(RepsCell);
     row.appendChild(WeightCell);
-    row.appendChild(AgeCell);
     
     // Add the row to the table
     currentTable.appendChild(row);
