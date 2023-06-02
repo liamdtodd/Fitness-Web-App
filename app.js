@@ -166,7 +166,7 @@ app.post('/add-exercise', function (req, res) {
     const { name, sets, reps, weight } = req.body;
 
     db.pool.query('INSERT INTO Exercise (Name, Sets, Repetitions, Weight) VALUES (?, ?, ?, ?)',
-        [exerciseName, parseInt(sets), parseInt(reps), parseInt(weight)], function (error) {
+        [name, parseInt(sets), parseInt(reps), parseInt(weight)], function (error) {
             if (error) {
                 console.error('Error inserting exercise data into the database:', error);
                 return res.status(500).send('Internal Server Error');
@@ -177,7 +177,7 @@ app.post('/add-exercise', function (req, res) {
 });
 
 //add row to Nutrients
-app.post('/add-nutrients', function (req, res) {
+app.post('/add-nutrient', function (req, res) {
     const { type, count, memberID } = req.body;
 
     db.pool.query('INSERT INTO Nutrients (Type, NutrientCount, MemberID) VALUES (?, ?, ?)',
