@@ -1,0 +1,41 @@
+<h1>Fitness Table</h1>
+
+<table id="fitness-table">
+    <thead>
+        <tr>
+            <th>Workout ID</th>
+            <th>Type</th>
+            <th>Time</th>
+            <th>Member ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each fitness}}
+        <tr>
+            <td>{{WorkoutID}}</td>
+            <td>{{Type}}</td>
+            <td>{{Time}}</td>
+            <td>{{MemberID}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h2>Add to Fitness</h2>
+
+<form action="/add-fitness" method="POST">
+    <label for="inputType">Type:</label>
+    <input type="text" id="inputType" name="inputType" required>
+
+    <label for="inputTime">Time:</label>
+    <input type="number" id="inputTime" name="inputTime" required>
+
+    <label for="inputMemberID">MemberID:</label>
+    <input type="number" id="inputMemberID" name="inputMemberID" required>
+
+    <input type="submit" value="Add Fitness">
+</form>
+
+<!-- Update Fitness Form -->
+
+<!-- Delete Fitness Form -->
