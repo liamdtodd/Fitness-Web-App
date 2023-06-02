@@ -349,8 +349,8 @@ app.put('/put-fit-to-exc-ajax', function (req, res, next) {
 app.put('/put-exercise-ajax', function (req, res, next) {
     let data = req.body;
 
-    let Sets = parseInt(data.Type);
-    let ExerciseID = parseInt(data.NutrientID);
+    let Sets = parseInt(data.Sets);
+    let ExerciseID = parseInt(data.ExerciseID);
 
     queryUpdateSets = 'UPDATE Exercise SET Sets = ? WHERE Exercise.ExerciseID = ?';
     selectExercise = `SELECT * FROM Exercise WHERE Exercise.ExerciseID = ?`
