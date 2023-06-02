@@ -72,6 +72,22 @@ app.get('/', function(req, res) {
 });
 
 
+app.get('/member', function (req, res) {
+    db.pool.query('SELECT * FROM Member', function (error, memberResults) {
+        if (error) {
+            console.log('Error getting data from database: ', error);
+            return res.status(500);
+        }
+
+        const data = {
+            member: memberResults
+        };
+
+        res.render('member', data);
+    });
+});
+
+
 app.get('/fit-to-exc', function (req, res) {
     db.pool.query('SELECT * FROM FitnesstoExercise', function (error, fitexerResults) {
         if (error) {
@@ -84,6 +100,51 @@ app.get('/fit-to-exc', function (req, res) {
         };
 
         res.render('fit-to-exc', data);
+    });
+});
+
+app.get('/nutrients', function (req, res) {
+    db.pool.query('SELECT * FROM Nutrients', function (error, nutrientsResults) {
+        if (error) {
+            console.log('Error getting data from database: ', error);
+            return res.status(500);
+        }
+
+        const data = {
+            nutrients: nutrientsResults
+        };
+
+        res.render('nutrients', data);
+    });
+});
+
+app.get('/exercise', function (req, res) {
+    db.pool.query('SELECT * FROM Exercise', function (error, exerciseResults) {
+        if (error) {
+            console.log('Error getting data from database: ', error);
+            return res.status(500);
+        }
+
+        const data = {
+            exercise: exerciseResults
+        };
+
+        res.render('exercise', data);
+    });
+});
+
+app.get('/fitness', function (req, res) {
+    db.pool.query('SELECT * FROM Fitness', function (error, fitnessResults) {
+        if (error) {
+            console.log('Error getting data from database: ', error);
+            return res.status(500);
+        }
+
+        const data = {
+            fitness: fitnessResults
+        };
+
+        res.render('fitness', data);
     });
 });
 
