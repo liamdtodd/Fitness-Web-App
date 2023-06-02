@@ -281,7 +281,7 @@ app.put('/put-nutrient-ajax', function (req, res, next) {
 
 
     // Run the 1st query
-    db.pool.query(queryUpdateType, [Count, NutrientID], function (error, rows, fields) {
+    db.pool.query(queryUpdateCount, [Count, NutrientID], function (error, rows, fields) {
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
