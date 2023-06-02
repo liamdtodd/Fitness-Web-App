@@ -104,6 +104,7 @@ app.post('/add-member', function(req, res) {
         });
 });
 
+//add row to FitnesstoExercise
 app.post('/add-fit-to-exc', function (req, res) {
     const { fitnessID, exerciseID } = req.body;
 
@@ -166,120 +167,9 @@ app.post('/add-nutrients', function(req, res) {
     });
 });
 
+//UPDATES
+
 //update Member
-app.post('/update-member', function(req, res) {
-    const {memberID, email, height, weight, age} = req.body;
-
-    db.pool.query('UPDATE Member SET Email = ?, Height = ?, Weight = ?, Age = ? WHERE MemberID = ?',
-        [email, parseInt(height), parseInt(weight), parseInt(age), parseInt(memberID)], function(error) {
-            if (error) {
-                console.log('Error updating data to database: ', error);
-                return res.status(500);
-            }
-
-            res.redirect('/');
-        });
-});
-
-//update Nutrients
-app.post('/update-nutrients', function(req, res) {
-    const {nutrientID, type, nutrientCount, memberID} = req.body;
-
-    db.pool.query('UPDATE Nutrients SET Type = ?, NutrientCount = ?, MemberID = ? WHERE NutrientID = ?', 
-        [type, parseInt(nutrientCount), parseInt(memberID), parseInt(nutrientID)], function(error) {
-            if (error) {
-                console.log('Error updating database: ', error);
-                return res.status(500);
-            }
-
-            res.redirect('/');
-        });
-});
-
-//update FitnesstoExercise
-app.post('/update-fit-to-exc', function(req, res) {
-    const {oldworkoutID, oldexerciseID, newworkoutID, newexerciseID} = req.body;
-
-    db.pool.query('UPDATE FitnesstoExercise SET WorkoutID = ?, ExerciseID = ? WHERE WorkoutID = ? AND ExerciseID = ?', 
-        [parseInt(newworkoutID), parseInt(newexerciseID), parseInt(oldworkoutID), parseInt(oldexerciseID)], function(error) {
-            if (error) {
-                console.log('Error updating database: ', error);
-                return res.status(500);
-            }
-
-            res.redirect('/');
-        });
-});
-
-//delete a Member
-app.post('/delete-member', function(req, res) {
-    const {memberID} = req.body;
-
-    db.pool.query('DELETE FROM Member WHERE MemberID = ?', [parseInt(memberID)], function(error) {
-        if (error) {
-            console.log('Error deleting from databse: ', error);
-            return res.status(500);
-        }
-
-        res.redirect('/');
-    });
-});
-
-//delete row from Nutrients
-app.post('/delete-nutrients', function(req, res) {
-    const {nutrientID} = req.body;
-
-    db.pool.query('DELETE FROM Nutrients WHERE NutrientID = ?', [parseInt(nutrientID)], function(error) {
-        if (error) {
-            console.log('Error deleting from database: ', error);
-            return res.status(500);
-        }
-
-        res.redirect('/');
-    });
-});
-
-//delete row from FitnesstoExercise
-app.post('/delete-fit-to-exc', function(req, res) {
-    const {workoutID, exerciseID} = req.body;
-
-    db.pool.query('DELETE FROM FitnesstoExercise WHERE WorkoutID = ? AND ExerciseID = ?', [parseInt(workoutID), parseInt(exerciseID)], function(error) {
-        if (error) {
-            console.log('Error deleting data from database: ', error);
-            return res.status(500);
-        }
-
-        res.redirect('/');
-    });
-});
-
-/*
- * LISTENER
- */
-
-app.listen(PORT, function() {
-	console.log('Express started on http://localhost:' + PORT + '; press Ctrl+C to terminate.');
-});
-
-app.delete('/delete-member-ajax/', function (req, res, next) {
-    let data = req.body;
-    let MemberID = parseInt(data.id);
-    let deleteMember = `DELETE FROM Member WHERE Member.MemberID = ?`;
-    let deleteMember2 = `DELETE FROM bsg_people WHERE id = ?`;
-
-
-    // Run the 1st query
-    db.pool.query(deleteMember, [MemberID], function (error, rows, fields) {
-        if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-        }
-    })
-});
-
-
 app.put('/put-member-ajax', function (req, res, next) {
     let data = req.body;
 
@@ -314,4 +204,33 @@ app.put('/put-member-ajax', function (req, res, next) {
             })
         }
     })
+});
+
+//DELETES
+
+//delete Member
+app.delete('/delete-member-ajax/', function (req, res, next) {
+    let data = req.body;
+    let MemberID = parseInt(data.id);
+    let deleteMember = `DELETE FROM Member WHERE Member.MemberID = ?`;
+    let deleteMember2 = `DELETE FROM bsg_people WHERE id = ?`;
+
+
+    // Run the 1st query
+    db.pool.query(deleteMember, [MemberID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+/*
+ * LISTENER
+ */
+
+app.listen(PORT, function() {
+	console.log('Express started on http://localhost:' + PORT + '; press Ctrl+C to terminate.');
 });
