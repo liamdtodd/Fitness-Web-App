@@ -161,7 +161,7 @@ app.post('/add-member', function(req, res) {
                 return res.status(500);
             }
 
-            res.redirect('/');
+            res.redirect('/member');
         });
 });
 
