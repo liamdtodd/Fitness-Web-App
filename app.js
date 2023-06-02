@@ -104,6 +104,21 @@ app.post('/add-member', function(req, res) {
         });
 });
 
+app.post('/add-fit-to-exc', function (req, res) {
+    const { fitnessID, exerciseID } = req.body;
+
+    db.pool.query(
+        'INSERT INTO FitnesstoExercise (FitnessID, ExerciseID) VALUES (?, ?)',
+        [parseInt(fitnessID), parseInt(exerciseID)], function (error) {
+            if (error) {
+                console.error('Error inserting fitness-to-exercise data into the database:', error);
+                return res.status(500);
+            }
+
+            res.redirect('/fit-to-exc');
+        });
+});
+
 //add row to Fitness
 app.post('/add-fitness', function(req, res) {
     const {memberID, type, time } = req.body;
@@ -149,23 +164,6 @@ app.post('/add-nutrients', function(req, res) {
   
       res.redirect('/');
     });
-});
-
-//add row to FitnesstoExercise
-app.post('/add-fitnesstoexercise', function(req, res) {
-    const { fitnessID, exerciseID } = req.body;
-  
-    db.pool.query(
-      'INSERT INTO FitnesstoExercise (FitnessID, ExerciseID) VALUES (?, ?, ?)',
-      [parseInt(fitnessID), parseInt(exerciseID)],
-      function(error) {
-        if (error) {
-          console.error('Error inserting fitness-to-exercise data into the database:', error);
-          return res.status(500).send('Internal Server Error');
-        }
-  
-        res.redirect('/');
-      });
 });
 
 //update Member
@@ -261,4 +259,70 @@ app.post('/delete-fit-to-exc', function(req, res) {
 
 app.listen(PORT, function() {
 	console.log('Express started on http://localhost:' + PORT + '; press Ctrl+C to terminate.');
+});
+
+app.delete('/delete-member-ajax/', function (req, res, next) {
+    let data = req.body;
+    let personID = parseInt(data.id);
+    let deleteBsg_Cert_People = `DELETE FROM bsg_cert_people WHERE pid = ?`;
+    let deleteBsg_People = `DELETE FROM bsg_people WHERE id = ?`;
+
+
+    // Run the 1st query
+    db.pool.query(deleteBsg_Cert_People, [personID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else {
+            // Run the second query
+            db.pool.query(deleteBsg_People, [personID], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(204);
+                }
+            })
+        }
+    })
+});
+
+app.put('/put-member-ajax', function (req, res, next) {
+    let data = req.body;
+
+    let memberID = parseInt(data.MemberID);
+    let name = parseInt(data.Name);
+
+    queryUpdateWorld = `UPDATE bsg_people SET homeworld = ? WHERE bsg_people.id = ?`;
+    selectWorld = `SELECT * FROM bsg_planets WHERE id = ?`
+
+    // Run the 1st query
+    db.pool.query(queryUpdateWorld, [homeworld, person], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(selectWorld, [homeworld], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
 });
