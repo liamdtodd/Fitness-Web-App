@@ -188,7 +188,7 @@ app.post('/add-nutrient', function (req, res) {
                 return res.status(500).send('Internal Server Error');
             }
 
-            res.redirect('/nutrient');
+            res.redirect('/nutrients');
         });
 });
 
