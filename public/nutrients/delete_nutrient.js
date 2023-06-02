@@ -1,4 +1,4 @@
-function deleteMember(nutrientID) {
+function deleteNutrient(nutrientID) {
     // Put our data we want to send in a javascript object
     let data = {
         id: nutrientID

@@ -1,4 +1,4 @@
-function deleteMember(workoutID) {
+function deleteFitness(workoutID) {
     // Put our data we want to send in a javascript object
     let data = {
         id: workoutID
