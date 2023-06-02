@@ -106,11 +106,13 @@ app.post('/add-member', function(req, res) {
 
 //add row to FitnesstoExercise
 app.post('/add-fit-to-exc', function (req, res) {
-    const { fitnessID, exerciseID } = req.body;
+    const { WorkoutID, ExerciseID } = req.body;
 
+    console.log(WorkoutID)
+    console.log(ExerciseID)
     db.pool.query(
         'INSERT INTO FitnesstoExercise (FitnessID, ExerciseID) VALUES (?, ?)',
-        [parseInt(fitnessID), parseInt(exerciseID)], function (error) {
+        [parseInt(WorkoutID), parseInt(ExerciseID)], function (error) {
             if (error) {
                 console.error('Error inserting fitness-to-exercise data into the database:', error);
                 return res.status(500);
@@ -121,50 +123,50 @@ app.post('/add-fit-to-exc', function (req, res) {
 });
 
 //add row to Fitness
-app.post('/add-fitness', function(req, res) {
-    const {memberID, type, time } = req.body;
-  
+app.post('/add-fitness', function (req, res) {
+    const { memberID, type, time } = req.body;
+
     db.pool.query(
-      'INSERT INTO Fitness (MemberID, Type, Time) VALUES (?, ?, ?)',
-      [parseInt(memberID), type, parseInt(time)],
-      function(error) {
-        if (error) {
-          console.error('Error inserting fitness data into the database:', error);
-          return res.status(500).send('Internal Server Error');
-        }
-  
-        res.redirect('/');
-      });
+        'INSERT INTO Fitness (MemberID, Type, Time) VALUES (?, ?, ?)',
+        [parseInt(memberID), type, parseInt(time)],
+        function (error) {
+            if (error) {
+                console.error('Error inserting fitness data into the database:', error);
+                return res.status(500).send('Internal Server Error');
+            }
+
+            res.redirect('/');
+        });
 });
 
 //add row to Exercise
-app.post('/add-exercise', function(req, res) {
-    const {name, sets, reps, weight} = req.body;
-  
-    db.pool.query('INSERT INTO Exercise (Name, Sets, Repetitions, Weight) VALUES (?, ?, ?, ?)', 
-        [exerciseName, parseInt(sets), parseInt(reps), parseInt(weight)], function(error) {
-      if (error) {
-        console.error('Error inserting exercise data into the database:', error);
-        return res.status(500).send('Internal Server Error');
-      }
-  
-      res.redirect('/');
-    });
+app.post('/add-exercise', function (req, res) {
+    const { name, sets, reps, weight } = req.body;
+
+    db.pool.query('INSERT INTO Exercise (Name, Sets, Repetitions, Weight) VALUES (?, ?, ?, ?)',
+        [exerciseName, parseInt(sets), parseInt(reps), parseInt(weight)], function (error) {
+            if (error) {
+                console.error('Error inserting exercise data into the database:', error);
+                return res.status(500).send('Internal Server Error');
+            }
+
+            res.redirect('/');
+        });
 });
 
 //add row to Nutrients
-app.post('/add-nutrients', function(req, res) {
-    const {type, count, memberID} = req.body;
-  
-    db.pool.query('INSERT INTO Nutrients (Type, NutrientCount, MemberID) VALUES (?, ?, ?)', 
-        [type, parseInt(count), parseInt(memberID)], function(error) {
-      if (error) {
-        console.error('Error inserting nutrient data into the database:', error);
-        return res.status(500).send('Internal Server Error');
-      }
-  
-      res.redirect('/');
-    });
+app.post('/add-nutrients', function (req, res) {
+    const { type, count, memberID } = req.body;
+
+    db.pool.query('INSERT INTO Nutrients (Type, NutrientCount, MemberID) VALUES (?, ?, ?)',
+        [type, parseInt(count), parseInt(memberID)], function (error) {
+            if (error) {
+                console.error('Error inserting nutrient data into the database:', error);
+                return res.status(500).send('Internal Server Error');
+            }
+
+            res.redirect('/');
+        });
 });
 
 //UPDATES
