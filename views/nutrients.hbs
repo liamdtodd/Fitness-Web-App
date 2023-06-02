@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            {{#each nutrient}}
+            {{#each nutrients}}
             <tr>
                 <td>{{NutrientID}}</td>
                 <td>{{Type}}</td>
@@ -47,7 +47,7 @@
         <label for="updateSelect">Select Nutrient:</label>
         <select name="updateSelect" id="updateSelect">
             <option value="">Select a Nutrient</option>
-            {{#each nutrient}}
+            {{#each nutrients}}
             <option value="{{this.NutrientID}}">{{this.NutrientID}}</option>
             {{/each}}
         </select>
@@ -64,7 +64,7 @@
         <label for="deleteSelect">Select Nutrient:</label>
         <select name="deleteSelect" id="deleteSelect">
             <option value="">Select a Nutrient</option>
-            {{#each nutrient}}
+            {{#each nutrients}}
             <option value="{{this.NutrientID}}">{{this.NutrientID}}</option>
             {{/each}}
         </select>
