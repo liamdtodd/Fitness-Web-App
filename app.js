@@ -273,15 +273,15 @@ app.put('/put-fitness-ajax', function (req, res, next) {
 app.put('/put-nutrient-ajax', function (req, res, next) {
     let data = req.body;
 
-    let Type = data.Type;
+    let Count = parseInt(data.NutrientCount);
     let NutrientID = parseInt(data.NutrientID);
 
-    queryUpdateType = 'UPDATE Nutrients SET Type = ? WHERE Nutrients.NutrientID = ?';
+    queryUpdateCount = 'UPDATE Nutrients SET NutrientCount = ? WHERE Nutrients.NutrientID = ?';
     selectNutrient = `SELECT * FROM Nutrients WHERE Nutrients.NutrientID = ?`
 
 
     // Run the 1st query
-    db.pool.query(queryUpdateType, [Type, NutrientID], function (error, rows, fields) {
+    db.pool.query(queryUpdateType, [Count, NutrientID], function (error, rows, fields) {
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
