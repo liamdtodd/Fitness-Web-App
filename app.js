@@ -115,6 +115,8 @@ app.get('/fitness', function (req, res) {
 app.post('/add-member', function(req, res) {
     const {inputName, inputEmail, inputHeight, inputWeight, inputAge} = req.body
 
+    console.log(inputName)
+    console.log(inputEmail)
     db.pool.query('INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES (?, ?, ?, ?, ?)',
         [inputName, inputEmail, parseInt(inputHeight), parseInt(inputWeight), parseInt(inputAge)], function(error) {
             if (error) {
@@ -145,7 +147,7 @@ app.post('/add-fit-to-exc-ajax', function (req, res) {
 });
 
 //add row to Fitness
-app.post('/add-fitness', function (req, res) {
+app.post('/add-fitness-ajax', function (req, res) {
     const { InputMemberID, InputType, InputTime } = req.body;
 
     db.pool.query(
@@ -157,27 +159,28 @@ app.post('/add-fitness', function (req, res) {
                 return res.status(500).send('Internal Server Error');
             }
 
-            res.redirect('/');
+            res.redirect('/fitness');
         });
 });
 
 //add row to Exercise
-app.post('/add-exercise', function (req, res) {
-    const { InputName, InputSets, InputRepetitions, InputWeight } = req.body;
+app.post('/add-exercise-form-ajax', function (req, res) {
+    const { inputName, inputSets, inputRepetitions, inputWeight } = req.body;
+
 
     db.pool.query('INSERT INTO Exercise (Name, Sets, Repetitions, Weight) VALUES (?, ?, ?, ?)',
-        [InputName, parseInt(InputSets), parseInt(InputRepetitions), parseInt(InputWeight)], function (error) {
+        [inputName, parseInt(inputSets), parseInt(inputRepetitions), parseInt(inputWeight)], function (error) {
             if (error) {
                 console.error('Error inserting exercise data into the database:', error);
                 return res.status(500).send('Internal Server Error');
             }
 
-            res.redirect('/');
+            res.redirect('/exercise');
         });
 });
 
 //add row to Nutrients
-app.post('/add-nutrient', function (req, res) {
+app.post('/add-nutrient-ajax', function (req, res) {
     const { InputType, InputNutrientCount, InputMemberID } = req.body;
 
     db.pool.query('INSERT INTO Nutrients (Type, NutrientCount, MemberID) VALUES (?, ?, ?)',
@@ -187,7 +190,7 @@ app.post('/add-nutrient', function (req, res) {
                 return res.status(500).send('Internal Server Error');
             }
 
-            res.redirect('/');
+            res.redirect('/nutrient');
         });
 });
 

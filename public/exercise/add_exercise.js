@@ -1,8 +1,8 @@
 // Get the objects we need to modify
-let addMemberForm = document.getElementById('add-exercise-form-ajax');
+let addExerciseForm = document.getElementById('add-exercise-form-ajax');
 
 // Modify the objects we need
-addMemberForm.addEventListener("submit", function (e) {
+addExerciseForm.addEventListener("submit", function (e) {
     
     // Prevent the form from submitting
     e.preventDefault();
