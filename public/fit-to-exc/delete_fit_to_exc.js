@@ -1,7 +1,7 @@
-function deleteFitToExc(WorkoutID) {
+function deleteFitToExc(ExerciseID) {
      // Put our data we want to send in a javascript object
      let data = {
-         id: WorkoutID
+         id: ExerciseID
      };
     
      // Setup our AJAX request
@@ -26,13 +26,13 @@ function deleteFitToExc(WorkoutID) {
  }
 
 
-function deleteRow(WorkoutID){
+function deleteRow(ExerciseID){
 
     let table = document.getElementById("fit-to-exc-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
        //iterate through rows
        //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == WorkoutID) {
+       if (table.rows[i].getAttribute("data-value") == ExerciseID) {
             table.deleteRow(i);
             break;
        }
