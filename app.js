@@ -71,6 +71,22 @@ app.get('/', function(req, res) {
     });
 });
 
+
+app.get('/fit-to-exc', function (req, res) {
+    db.pool.query('SELECT * FROM FitnesstoExercise', function (error, fitexerResults) {
+        if (error) {
+            console.log('Error getting data from database: ', error);
+            return res.status(500);
+        }
+
+        const data = {
+            fittoexc: fitexerResults
+        };
+
+        res.render('fit-to-exc', data);
+    });
+});
+
 // POST ROUTES
 
 //add row to Member
