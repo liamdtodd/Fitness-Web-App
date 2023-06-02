@@ -41,5 +41,35 @@
 </form>
 
 <!-- Update Fitness Form -->
+<h2>Update Fitness</h2>
+<form id="update-fitness-form-ajax">
+    <label for="updateSelect">Select Fitness:</label>
+    <select name="updateSelect" id="updateSelect">
+        <option value="">Select a Fitness plan</option>
+        {{#each fitness}}
+        <option value="{{this.WorkoutID}}">{{this.WorkoutID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="updateType">New Fitness Type</label>
+    <input type="text" id="updateType" name="updateType" required>
+
+    <input type="submit" value="Update">
+</form>
 
 <!-- Delete Fitness Form -->
+<h2>Delete Fitness</h2>
+<form id="delete-fitness-form-ajax">
+    <label for="deleteSelect">Select Fitness</label>
+    <select name="deleteSelect" id="deleteSelect">
+        <option value="">Select a Fitness plan</option>
+        {{#each fitness}}
+        <option value="{{this.WorkoutID}}">{{this.WorkoutID}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit" value="Delete">
+</form>
+
+<script src="../fitness/update_fitness.js"></script>
+<script src="../fitness/delete_fitness.js"></script>
