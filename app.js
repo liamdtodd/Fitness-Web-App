@@ -145,7 +145,7 @@ app.post('/add-fit-to-exc-ajax', function (req, res) {
 });
 
 //add row to Fitness
-app.post('/add-fitness-ajax', function (req, res) {
+app.post('/add-fitness', function (req, res) {
     const { inputMemberID, inputType, inputTime } = req.body;
 
     db.pool.query(
