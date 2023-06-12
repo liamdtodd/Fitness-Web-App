@@ -1,7 +1,7 @@
-function deleteFitToExc(ExerciseID) {
+function deleteFitToExc(WorkoutID) {
      // Put our data we want to send in a javascript object
      let data = {
-         id: ExerciseID
+         id: WorkoutID
      };
     
      // Setup our AJAX request
