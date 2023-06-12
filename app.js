@@ -7,7 +7,7 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var mysql = require('mysql2');
-PORT = 5742;
+PORT = 5743;
 
 var app = express();
 
@@ -200,35 +200,71 @@ app.put('/put-member-ajax', function (req, res, next) {
 
     let email = data.Email;
     let memberID = parseInt(data.MemberID);
+    let name = data.Name;
+    let height = parseInt(data.Height);
+    let weight = parseInt(data.Weight);
+    let age = parseInt(data.Age);
+
 
     queryUpdateEmail = 'UPDATE Member SET Email = ? WHERE Member.MemberID = ?';
+    queryUpdateName = 'UPDATE Member SET Name = ? WHERE Member.MemberID = ?';
+    queryUpdateHeight = 'UPDATE Member SET Height = ? WHERE Member.MemberID = ?';
+    queryUpdateWeight = 'UPDATE Member SET Weight = ? WHERE Member.MemberID = ?';
+    queryUpdateAge = 'UPDATE Member SET Age = ? WHERE Member.MemberID = ?';
     selectMember = `SELECT * FROM Member WHERE Member.MemberID = ?`
 
 
-    // Run the 1st query
-    db.pool.query(queryUpdateEmail, [email, memberID], function (error, rows, fields) {
-        if (error) {
+    if (Number.isNaN(memberID)) {
+        res.sendStatus(204)
+    }
 
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-        }
-
-        // If there was no error, we run our second query and return that data so we can use it to update the people's
-        // table on the front-end
-        else {
-            // Run the second query
-            db.pool.query(selectMember, [memberID], function (error, rows, fields) {
-
+    else {
+        // Run the 1st query
+        if (email != "") {
+            db.pool.query(queryUpdateEmail, [email, memberID], function (error, rows, fields) {
                 if (error) {
-                    console.log(error);
+                    console.log(error)
                     res.sendStatus(400);
-                } else {
-                    res.send(rows);
                 }
             })
         }
-    })
+        // Run the 2nd query
+        if (name != "") {
+            db.pool.query(queryUpdateName, [name, memberID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        // Run the third query
+        if (height != "") {
+            db.pool.query(queryUpdateHeight, [height, memberID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+            })
+        }
+        // Run the fourth query
+        if (weight != "") {
+            db.pool.query(queryUpdateWeight, [weight, memberID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        if (age != "") {
+            db.pool.query(queryUpdateAge, [age, memberID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        return res.redirect("/member")
+    }
 });
 
 //update fitness
@@ -237,35 +273,53 @@ app.put('/put-fitness-ajax', function (req, res, next) {
 
     let Type = data.Type;
     let WorkoutID = parseInt(data.WorkoutID);
+    let time = parseInt(data.Time)
+    let memberID = parseInt(data.MemberID)
+    console.log(Type)
+    console.log(WorkoutID)
+    console.log(time)
+    console.log(memberID)
+
 
     queryUpdateType = 'UPDATE Fitness SET Type = ? WHERE Fitness.WorkoutID = ?';
+    queryUpdateTime = 'UPDATE Fitness SET Time = ? WHERE Fitness.WorkoutID = ?';
+    queryUpdateMemID = 'UPDATE Fitness SET MemberID = ? WHERE Fitness.WorkoutID = ?';
     selectWorkout = `SELECT * FROM Fitness WHERE Fitness.WorkoutID = ?`
 
 
-    // Run the 1st query
-    db.pool.query(queryUpdateType, [Type, WorkoutID], function (error, rows, fields) {
-        if (error) {
+    if (Number.isNaN(WorkoutID)) {
+        res.sendStatus(204)
+    }
 
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-        }
-
-        // If there was no error, we run our second query and return that data so we can use it to update the people's
-        // table on the front-end
-        else {
-            // Run the second query
-            db.pool.query(selectWorkout, [WorkoutID], function (error, rows, fields) {
-
+    else {
+        // Run the 1st query
+        if (Type != "") {
+            db.pool.query(queryUpdateType, [Type, WorkoutID], function (error, rows, fields) {
                 if (error) {
-                    console.log(error);
+                    console.log(error)
                     res.sendStatus(400);
-                } else {
-                    res.send(rows);
                 }
             })
         }
-    })
+        // Run the 2nd query
+        if (time != "") {
+            db.pool.query(queryUpdateTime, [time, WorkoutID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        if (memberID != "") {
+            db.pool.query(queryUpdateMemID, [memberID, WorkoutID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        return res.redirect("/fitness")
+    }
 });
 
 
@@ -301,6 +355,7 @@ app.put('/put-nutrient-ajax', function (req, res, next) {
                     res.sendStatus(400);
                 } else {
                     res.send(rows);
+                    res.redirect('/nutrients');
                 }
             })
         }
@@ -340,6 +395,7 @@ app.put('/put-fit-to-exc-ajax', function (req, res, next) {
                     res.sendStatus(400);
                 } else {
                     res.send(rows);
+                    res.redirect('/fit-to-exc');
                 }
             })
         }
@@ -377,6 +433,7 @@ app.put('/put-exercise-ajax', function (req, res, next) {
                     res.sendStatus(400);
                 } else {
                     res.send(rows);
+                    res.redirect('/exercise');
                 }
             })
         }
@@ -401,6 +458,7 @@ app.delete('/delete-member-ajax/', function (req, res, next) {
             console.log(error);
             res.sendStatus(400);
         }
+        res.redirect('/member');
     })
 });
 
@@ -420,6 +478,7 @@ app.delete('/delete-exercise-ajax/', function (req, res, next) {
             console.log(error);
             res.sendStatus(400);
         }
+        res.redirect('/exercise');
     })
 });
 
@@ -439,6 +498,7 @@ app.delete('/delete-nutrient-ajax/', function (req, res, next) {
             console.log(error);
             res.sendStatus(400);
         }
+        res.redirect('/nutrients');
     })
 });
 
@@ -458,6 +518,7 @@ app.delete('/delete-fitness-ajax/', function (req, res, next) {
             console.log(error);
             res.sendStatus(400);
         }
+        res.redirect('/fitness');
     })
 });
 
@@ -477,6 +538,7 @@ app.delete('/delete-fit-to-exc-ajax/', function (req, res, next) {
             console.log(error);
             res.sendStatus(400);
         }
+        res.redirect('/fit-to-exc');
     })
 });
 /*
