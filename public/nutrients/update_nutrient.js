@@ -13,7 +13,9 @@ updateMemberForm.addEventListener("submit", function (e) {
 
     // Get the values from the form fields
     let NutrientIDValue = document.querySelector('#updateSelect').value;
+    let TypeValue = document.querySelector('#updateNutrientType').value;
     let CountValue = document.querySelector('#updateCount').value;
+    let MemberIDValue = document.querySelector('#updateMemberIDSelect').value;
     
     // currently the database table for bsg_people does not allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
@@ -23,7 +25,9 @@ updateMemberForm.addEventListener("submit", function (e) {
     // Put our data we want to send in a javascript object
     let data = {
         NutrientID: NutrientIDValue,
+        Type: TypeValue,
         NutrientCount: CountValue,
+        MemberID: MemberIDValue
     }
     
     // Setup our AJAX request

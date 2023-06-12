@@ -14,6 +14,8 @@ updateMemberForm.addEventListener("submit", function (e) {
     // Get the values from the form fields
     let WorkoutIDValue = document.querySelector('#updateSelect').value;
     let TypeValue = document.querySelector('#updateType').value;
+    let TimeValue = document.querySelector('#updateTime').value;
+    let MemberIDValue = document.querySelector('#updateMemberSelect').value;
     
     // currently the database table for bsg_people does not allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
@@ -24,6 +26,8 @@ updateMemberForm.addEventListener("submit", function (e) {
     let data = {
         WorkoutID: WorkoutIDValue,
         Type: TypeValue,
+        Time: TimeValue,
+        MemberID: MemberIDValue
     }
     
     // Setup our AJAX request
