@@ -193,8 +193,8 @@ app.post('/add-nutrient', function (req, res) {
 });
 
 //find data of searched Member
-app.get('/search-member-ajax', function(req, res) {
-    const {memberID} = req.body;
+app.post('/search-member-ajax', function(req, res) {
+    const {MemberID} = req.body;
 
     db.pool.query('SELECT * FROM Member', function (error, memberResults) {
         if (error) {
@@ -203,7 +203,7 @@ app.get('/search-member-ajax', function(req, res) {
         }
 
         db.pool.query('SELECT * FROM Member WHERE MemberID = ?',
-            [parseInt(memberID)], function (error, results) {
+            [parseInt(MemberID)], function (error, results) {
                 if (error) {
                     console.log('Error adding data from database:', error);
                     return res.status(500).send('Internal Server Error');
@@ -215,6 +215,7 @@ app.get('/search-member-ajax', function(req, res) {
                 searchMember: results
             };
 
+            res.responseText = data.searchMember;
             res.render('member', data);
         });
     });

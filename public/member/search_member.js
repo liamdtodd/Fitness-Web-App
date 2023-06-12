@@ -11,7 +11,7 @@ searchMemberData.addEventListener('submit', function(error) {
 
     //AJAX req
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/search-member-ajax", true);
+    xhttp.open("POST", "/search-member-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
