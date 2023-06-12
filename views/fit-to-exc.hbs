@@ -16,7 +16,6 @@
                 <td>{{WorkoutID}}</td>
                 <td>{{ExerciseID}}</td>
                 <td>
-                    <button onclick="updateFitToExc('{{WorkoutID}}')">Update</button>
                     <button onclick="deleteFitToExc('{{ExerciseID}}')">Delete</button>
                 </td>
             </tr>
@@ -52,6 +51,7 @@
             <option name="">ExerciseID:</option>
             {{#each exercise}} 
             <option value="{{ExerciseID}}">{{ExerciseID}}</option>
+            {{/each}}
         </select>
 
         <input type="submit" value="Update">

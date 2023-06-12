@@ -9,13 +9,16 @@ updateMemberForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
     let inputMemberID = document.getElementById("mySelect");
-    let inputName = document.getElementById("input-Name-update");
+    let inputName = document.getElementById("updateExerciseName");
 
 
     console.log(document.querySelector('#updateSelect').value)
     // Get the values from the form fields
     let ExerciseIDValue = document.querySelector('#updateSelect').value;
+    let NameValue = document.querySelector('#updateExerciseName').value;
     let SetsValue = document.querySelector('#updateSets').value;
+    let RepsValue = document.querySelector('#updateReps').value;
+    let WeightValue = document.querySelector('#updateWeight').value;
     
     // currently the database table for bsg_people does not allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
@@ -25,7 +28,10 @@ updateMemberForm.addEventListener("submit", function (e) {
     // Put our data we want to send in a javascript object
     let data = {
         ExerciseID: ExerciseIDValue,
+        Name: NameValue,
         Sets: SetsValue,
+        Repetitions: RepsValue,
+        Weight: WeightValue
     }
     
     // Setup our AJAX request
