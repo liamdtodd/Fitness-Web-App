@@ -70,20 +70,4 @@
         <input type="submit" value="Update">
     </form>
 
-    <!-- Delete Member Form -->
-    <h2>Delete Member</h2>
-    <form id="delete-member-form-ajax">
-        <label for="deleteSelect">Select Member:</label>
-        <select name="deleteSelect" id="deleteSelect">
-            <option value="">Select a Member</option>
-            {{#each member}}
-            <option value="{{this.MemberID}}">{{this.MemberID}}</option>
-            {{/each}}
-        </select>
-
-        <input type="submit" value="Delete">
-    </form>
-
     <script src="../member/update_member.js"></script>
-    <script src="../member/delete_member.js"></script>
-    <!-- Include other JS scripts if needed -->

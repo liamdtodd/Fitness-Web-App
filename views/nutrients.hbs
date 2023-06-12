@@ -62,19 +62,4 @@
         <input type="submit" value="Update">
     </form>
 
-    <!-- Delete Nutrients Form -->
-    <h2>Delete Nutrients</h2>
-    <form id="delete-nutrient-form-ajax">
-        <label for="deleteSelect">Select Nutrient:</label>
-        <select name="deleteSelect" id="deleteSelect">
-            <option value="">Select a Nutrient</option>
-            {{#each nutrients}}
-            <option value="{{this.NutrientID}}">{{this.NutrientID}}</option>
-            {{/each}}
-        </select>
-
-        <input type="submit" value="Delete">
-    </form>
-
     <script src="../nutrients/update_nutrient.js"></script>
-    <script src="../nutrients/delete_nutrient.js"></script>

@@ -53,20 +53,6 @@
         <input type="submit" value="Update">
     </form>
 
-    <!-- Delete Member Form -->
-    <h2>Delete Fitness To Exercise</h2>
-    <form id="delete-fit-to-exc-form-ajax">
-        <label for="deleteSelect">Select WorkoutID:</label>
-        <select name="deleteSelect" id="deleteSelect">
-            <option value="">Select a WorkoutID</option>
-            {{#each fittoexc}}
-            <option value="{{this.WorkoutID}}">{{this.ExerciseID}}</option>
-            {{/each}}
-        </select>
 
-        <input type="submit" value="Delete">
-    </form>
 
     <script src="../fit-to-exc/update_fit_to_exc.js"></script>
-    <script src="../fit-to-exc/delete_fit_to_exc.js"></script>
-    <!-- Include other JS scripts if needed -->
