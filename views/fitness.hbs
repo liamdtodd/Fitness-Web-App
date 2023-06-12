@@ -55,8 +55,20 @@
         {{/each}}
     </select>
 
-    <label for="updateType">New Fitness Type</label>
+    <label for="updateType">Type:</label>
     <input type="text" id="updateType" name="updateType" required>
+
+    <label for="updateTime">Time:</label>
+    <input for="number" id="updateTime" name="updateTime" required>
+
+    <label for="updateMemberSelect">MemberID</label>
+    <select name="updateMemberSelect" id="updateMemberSelect">
+        <option value="">MemberID</option>
+        {{#each member}} 
+        <option value="{{MemberID}}">{{MemberID}}</option>
+        {{/each}} 
+    </select>
+
 
     <input type="submit" value="Update">
 </form>

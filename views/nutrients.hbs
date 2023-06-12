@@ -56,8 +56,19 @@
             {{/each}}
         </select>
 
-        <label for="updateCount">New Nutrient Count:</label>
+        <label for="updateNutrientType">Type:</label>
+        <input type="text" id="updateNutrientType" name="updateNutrientType" required>
+
+        <label for="updateCount">Nutrient Count:</label>
         <input type="number" id="updateCount" name="updateCount" required>
+
+        <label for="updateMemberIDSelect">MemberID:</label>
+        <select name="updateMemberIDSelect" id="updateMemberIDSelect">
+            <option value="">MemberID:</option>
+            {{#each member}} 
+            <option name="{{MemberID}}">{{MemberID}}</option>
+            {{/each}} 
+        </select>
 
         <input type="submit" value="Update">
     </form>

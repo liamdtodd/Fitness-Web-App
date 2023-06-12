@@ -62,8 +62,17 @@
             {{/each}}
         </select>
 
-        <label for="updateSets">New Exercise Sets:</label>
+        <label for="updateExerciseName">Name:</label>
+        <input type="text" id="updateExerciseName" name="updateExerciseName" required>
+
+        <label for="updateSets">Sets:</label>
         <input type="number" id="updateSets" name="updateSets" required>
+
+        <label for="updateReps">Repetitions:</label>
+        <input for="number" id="updateReps" name="updateReps" required>
+
+        <label for="updateWeight">Weight:</label>
+        <input for="number" id="updateWeight" name="updateWeight" required>
 
         <input type="submit" value="Update">
     </form>
