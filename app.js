@@ -382,7 +382,7 @@ app.put('/put-fit-to-exc-ajax', function (req, res, next) {
 
     queryUpdateWorkoutID = 'UPDATE Fitness SET WorkoutID = ? WHERE Fitness.WorkoutID = ?';
     queryUpdateExerciseID = 'UPDATE Exercise SET ExerciseID = ? WHERE Exercise.ExerciseID = ?'
-    // queryUpdateType = 'UPDATE Nutrients SET Type = ? WHERE Nutrients.NutrientID = ?';
+
     selectNutrient = `SELECT * FROM Nutrients WHERE Nutrients.NutrientID = ?`
 
 
