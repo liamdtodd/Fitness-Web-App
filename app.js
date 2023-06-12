@@ -192,6 +192,22 @@ app.post('/add-nutrient', function (req, res) {
         });
 });
 
+//add row to searched Member
+app.get('/search-member-ajax', function(req, res) {
+    const {memberID} = req.body;
+
+    db.pool.query('SELECT * FROM Member WHERE MemberID = ?',
+        [parseInt(memberID)], function (error, results) {
+            if (error) {
+                console.log('Error adding data from database:', error);
+                return res.status(500).send('Internal Server Error');
+            } else  
+                res.status(200).json(results);
+
+            res.redirect('/');
+        });
+})
+
 //UPDATES
 
 //update Member
