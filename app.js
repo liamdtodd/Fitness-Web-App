@@ -419,36 +419,58 @@ app.put('/put-exercise-ajax', function (req, res, next) {
 
     let Sets = parseInt(data.Sets);
     let ExerciseID = parseInt(data.ExerciseID);
+    let Name = data.Name;
+    let Reps = data.Repetitions;
+    let Weight = parseInt(data.Weight);
 
     queryUpdateSets = 'UPDATE Exercise SET Sets = ? WHERE Exercise.ExerciseID = ?';
+    queryUpdateName = 'UPDATE Exercise SET Name = ? WHERE Exercise.ExerciseID = ?';
+    queryUpdateReps = 'UPDATE Exercise SET Repetitions = ? WHERE Exercise.ExerciseID = ?';
+    queryUpdateWeight = 'UPDATE Exercise SET Weight = ? WHERE Exercise.ExerciseID = ?';
     selectExercise = `SELECT * FROM Exercise WHERE Exercise.ExerciseID = ?`
 
 
-    // Run the 1st query
-    db.pool.query(queryUpdateSets, [Sets, ExerciseID], function (error, rows, fields) {
-        if (error) {
+    if (Number.isNaN(ExerciseID)) {
+        res.sendStatus(204)
+    }
 
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-        }
-
-        // If there was no error, we run our second query and return that data so we can use it to update the people's
-        // table on the front-end
-        else {
-            // Run the second query
-            db.pool.query(selectExercise, [ExerciseID], function (error, rows, fields) {
-
+    else {
+        // Run the 1st query
+        if (Sets != "") {
+            db.pool.query(queryUpdateSets, [Sets, ExerciseID], function (error, rows, fields) {
                 if (error) {
-                    console.log(error);
+                    console.log(error)
                     res.sendStatus(400);
-                } else {
-                    res.send(rows);
-                    res.redirect('/exercise');
                 }
             })
         }
-    })
+        // Run the 2nd query
+        if (Name != "") {
+            db.pool.query(queryUpdateName, [Name, ExerciseID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        if (Reps != "") {
+            db.pool.query(queryUpdateReps, [Reps, ExerciseID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        if (Weight != "") {
+            db.pool.query(queryUpdateWeight, [Weight, ExerciseID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        return res.redirect("/exercise")
+    }
 });
 
 //DELETES
