@@ -330,36 +330,47 @@ app.put('/put-nutrient-ajax', function (req, res, next) {
 
     let Count = parseInt(data.NutrientCount);
     let NutrientID = parseInt(data.NutrientID);
+    let Type = data.Type
+    let MemberID = parseInt(data.MemberID)
 
     queryUpdateCount = 'UPDATE Nutrients SET NutrientCount = ? WHERE Nutrients.NutrientID = ?';
+    queryUpdateType = 'UPDATE Nutrients SET Type = ? WHERE Nutrients.NutrientID = ?';
+    queryUpdateMemID = 'UPDATE Nutrients SET MemberID = ? WHERE Nutrients.NutrientID = ?';
     selectNutrient = `SELECT * FROM Nutrients WHERE Nutrients.NutrientID = ?`
 
+    if (Number.isNaN(NutrientID)) {
+        res.sendStatus(204)
+    }
 
-    // Run the 1st query
-    db.pool.query(queryUpdateCount, [Count, NutrientID], function (error, rows, fields) {
-        if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-        }
-
-        // If there was no error, we run our second query and return that data so we can use it to update the people's
-        // table on the front-end
-        else {
-            // Run the second query
-            db.pool.query(selectNutrient, [NutrientID], function (error, rows, fields) {
-
+    else {
+        // Run the 1st query
+        if (Count != "") {
+            db.pool.query(queryUpdateCount, [Count, NutrientID], function (error, rows, fields) {
                 if (error) {
-                    console.log(error);
+                    console.log(error)
                     res.sendStatus(400);
-                } else {
-                    res.send(rows);
-                    res.redirect('/nutrients');
                 }
             })
         }
-    })
+        // Run the 2nd query
+        if (Type != "") {
+            db.pool.query(queryUpdateType, [Type, NutrientID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        if (MemberID != "") {
+            db.pool.query(queryUpdateMemID, [MemberID, NutrientID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400)
+                }
+            })
+        }
+        return res.redirect("/nutrients")
+    }
 });
 
 //update fit-to-exc

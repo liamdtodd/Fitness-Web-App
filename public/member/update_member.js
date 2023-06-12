@@ -80,4 +80,5 @@ function updateRow(data, MemberID){
             td.innerHTML = parsedData[0].Email; 
        }
     }
+
 }
