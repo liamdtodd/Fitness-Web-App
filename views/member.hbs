@@ -81,4 +81,44 @@
         <input type="submit" value="Update">
     </form>
 
+    <h2>Search Member</h2>
+    <form id="search-member-ajax">
+        <select name="propertySelect" id="propertySelect">
+            <option value="">Select Member</option>
+            {{#each member}} 
+            <option value="{{MemberID}}">{{MemberID}}</option>
+            {{/each}}
+        </select>
+
+        <input type="submit" value="Search">
+    </form>
+
+    <table id="search-table">
+        <h3>Searched Member:</h3>
+        <thead>
+            <tr>
+                <th>Member ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each searchMember}}
+            <tr>
+                <td>{{MemberID}}</td>
+                <td>{{Name}}</td>
+                <td>{{Email}}</td>
+                <td>{{Height}}</td>
+                <td>{{Weight}}</td>
+                <td>{{Age}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
     <script src="../member/update_member.js"></script>
+    <script src="../member/delete_member.js"></script>
+    <script src="../member/search_member.js"></script>
