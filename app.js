@@ -215,8 +215,7 @@ app.post('/search-member-ajax', function(req, res) {
                 searchMember: results
             };
 
-            res.responseText = data.searchMember;
-            res.render('member', data);
+            res.send(data.searchMember);
         });
     });
 });
