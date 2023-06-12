@@ -406,40 +406,25 @@ app.put('/put-nutrient-ajax', function (req, res, next) {
 app.put('/put-fit-to-exc-ajax', function (req, res, next) {
     let data = req.body;
 
-    let WorkoutID = data.WorkoutID;
+    let WorkoutID = parseInt(data.WorkoutID);
     let ExerciseID = parseInt(data.ExerciseID);
 
-    queryUpdateWorkoutID = 'UPDATE Fitness SET WorkoutID = ? WHERE Fitness.WorkoutID = ?';
-    queryUpdateExerciseID = 'UPDATE Exercise SET ExerciseID = ? WHERE Exercise.ExerciseID = ?'
+    queryUpdateExerciseID = 'UPDATE FitnesstoExercise SET ExerciseID = ? WHERE FitnesstoExercise.WorkoutID = ?';
 
     selectNutrient = `SELECT * FROM Nutrients WHERE Nutrients.NutrientID = ?`
 
 
     // Run the 1st query
-    db.pool.query(queryUpdateWorkoutID, [WorkoutID, ExerciseID], function (error, rows, fields) {
-        if (error) {
+    db.pool.query(queryUpdateExerciseID, [ExerciseID, WorkoutID], function (error, rows, fields) {
 
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+        if (error) {
             console.log(error);
             res.sendStatus(400);
-        }
-
-        // If there was no error, we run our second query and return that data so we can use it to update the people's
-        // table on the front-end
-        else {
-            // Run the second query
-            db.pool.query(queryUpdateExerciseID, [ExerciseID], function (error, rows, fields) {
-
-                if (error) {
-                    console.log(error);
-                    res.sendStatus(400);
-                } else {
-                    res.send(rows);
-                    res.redirect('/fit-to-exc');
-                }
-            })
+        } else {
+            res.send(rows);
         }
     })
+
 });
 
 //update exercise

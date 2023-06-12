@@ -12,7 +12,7 @@ updateFitToExcForm.addEventListener("submit", function (e) {
     let inputExerciseID = document.getElementById("input-ExerciseID-update");
 
     // Get the values from the form fields
-    let WorkoutIDValue = doucment.querySelector('#updateSelect').value;
+    let WorkoutIDValue = document.querySelector('#updateSelect').value;
     let ExerciseIDValue = document.querySelector('#updateExerciseSelect').value;
     
     // currently the database table for bsg_people does not allow updating values to NULL
