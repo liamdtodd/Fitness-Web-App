@@ -115,8 +115,6 @@ app.get('/fitness', function (req, res) {
 app.post('/add-member', function(req, res) {
     const {inputName, inputEmail, inputHeight, inputWeight, inputAge} = req.body
 
-    console.log(inputName)
-    console.log(inputEmail)
     db.pool.query('INSERT INTO Member (Name, Email, Height, Weight, Age) VALUES (?, ?, ?, ?, ?)',
         [inputName, inputEmail, parseInt(inputHeight), parseInt(inputWeight), parseInt(inputAge)], function(error) {
             if (error) {
@@ -303,10 +301,6 @@ app.put('/put-fitness-ajax', function (req, res, next) {
     let WorkoutID = parseInt(data.WorkoutID);
     let time = parseInt(data.Time)
     let memberID = parseInt(data.MemberID)
-    console.log(Type)
-    console.log(WorkoutID)
-    console.log(time)
-    console.log(memberID)
 
 
     queryUpdateType = 'UPDATE Fitness SET Type = ? WHERE Fitness.WorkoutID = ?';
@@ -585,7 +579,6 @@ app.delete('/delete-fitness-ajax/', function (req, res, next) {
 app.delete('/delete-fit-to-exc-ajax/', function (req, res, next) {
     let data = req.body;
     let WorkoutID = parseInt(data.id);
-    console.log(WorkoutID)
     let deleteFitToExc = 'DELETE FROM FitnesstoExercise WHERE FitnesstoExercise.WorkoutID = ?;'
 
     // Run the 1st query
