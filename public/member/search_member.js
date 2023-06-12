@@ -37,6 +37,10 @@ function addRowToTable(searchResults) {
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("search-table");
 
+    //remove previous search entry
+    while (currentTable.rows.length > 1) {
+        currentTable.deleteRow(1);
+    }
     // Get the location where we should insert the new row (end of table)
     //let newRowIndex = currentTable.rows.length;
 

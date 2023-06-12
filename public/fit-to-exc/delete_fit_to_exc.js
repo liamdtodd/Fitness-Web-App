@@ -23,6 +23,10 @@ function deleteFitToExc(ExerciseID) {
      }
      // Send the request and wait for the response
      xhttp.send(JSON.stringify(data));
+
+     setTimeout(() => {
+        location.reload();
+    }, 500);
  }
 
 
