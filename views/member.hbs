@@ -64,26 +64,22 @@
             {{/each}}
         </select>
 
-        <label for="updateEmail">New Email:</label>
+        <label for="updateMemberName">Name:</label>
+        <input type="text" id="updateMemberName" name="updateMemberName" required>
+
+        <label for="updateEmail">Email:</label>
         <input type="text" id="updateEmail" name="updateEmail" required>
+
+        <label for="updateHeight">Height:</label>
+        <input type="number" id="updateHeight" name="updateHeight" required>
+
+        <label for="updateMemberWeight">Weight:</label>
+        <input type="number" id="updateMemberWeight" name="updateMemberWeight" required>
+
+        <label for="updateAge">Age:</label>
+        <input type="number" id="updateAge" name="updateAge" required>
 
         <input type="submit" value="Update">
     </form>
 
-    <!-- Delete Member Form -->
-    <h2>Delete Member</h2>
-    <form id="delete-member-form-ajax">
-        <label for="deleteSelect">Select Member:</label>
-        <select name="deleteSelect" id="deleteSelect">
-            <option value="">Select a Member</option>
-            {{#each member}}
-            <option value="{{this.MemberID}}">{{this.MemberID}}</option>
-            {{/each}}
-        </select>
-
-        <input type="submit" value="Delete">
-    </form>
-
     <script src="../member/update_member.js"></script>
-    <script src="../member/delete_member.js"></script>
-    <!-- Include other JS scripts if needed -->
