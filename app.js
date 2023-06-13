@@ -56,11 +56,19 @@ app.get('/fit-to-exc', function (req, res) {
             return res.status(500);
         }
 
-        const data = {
-            fittoexc: fitexerResults
-        };
+        db.pool.query('SELECT * FROM Exercise', function (error, exerciseResults) {
+            if (error) {
+                console.log('Error getting data from database: ', error);
+                return res.status(500);
+            }
 
-        res.render('fit-to-exc', data);
+            const data = {
+                fittoexc: fitexerResults,
+                exercise: exerciseResults
+            };
+
+            res.render('fit-to-exc', data);
+        });
     });
 });
 
@@ -71,11 +79,19 @@ app.get('/nutrients', function (req, res) {
             return res.status(500);
         }
 
-        const data = {
-            nutrients: nutrientsResults
-        };
+        db.pool.query('SELECT * FROM Member', function(error, memberResults) {
+            if (error) {
+                console.log('Error gettings data from database: ', error);
+                return res.status(500);
+            }
 
-        res.render('nutrients', data);
+            const data = {
+                nutrients: nutrientsResults,
+                member: memberResults
+            };
+
+            res.render('nutrients', data);
+        });
     });
 });
 
@@ -101,11 +117,19 @@ app.get('/fitness', function (req, res) {
             return res.status(500);
         }
 
-        const data = {
-            fitness: fitnessResults
-        };
+        db.pool.query('SELECT * FROM Member', function (error, memberResults) {
+            if (error) {
+                console.log('Error getting data from database: ', error);
+                return res.status(500);
+            }
 
-        res.render('fitness', data);
+            const data = {
+                fitness: fitnessResults,
+                member: memberResults
+            };
+    
+            res.render('fitness', data);
+        });
     });
 });
 

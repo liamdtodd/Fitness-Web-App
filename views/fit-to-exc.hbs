@@ -49,7 +49,7 @@
         <label for="updateExerciseSelect">ExerciseID:</label>
         <select name="updateExerciseSelect" id="updateExerciseSelect">
             <option name="">ExerciseID:</option>
-            {{#each fittoexc}} 
+            {{#each exercise}} 
             <option value="{{this.ExerciseID}}">{{this.ExerciseID}}</option>
             {{/each}}
         </select>

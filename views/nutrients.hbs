@@ -64,8 +64,8 @@
         <label for="updateMemberIDSelect">MemberID:</label>
         <select name="updateMemberIDSelect" id="updateMemberIDSelect">
             <option value="">MemberID:</option>
-            {{#each nutrients}} 
-            <option name="{{this.MemberID}}">{{this.MemberID}}</option>
+            {{#each member}} 
+            <option name="{{member.MemberID}}">{{member.MemberID}}</option>
             {{/each}} 
         </select>
 
